@@ -1,0 +1,31 @@
+# Uncomment this line to define a global platform for your project
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target 'Travel Queue' do
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'JGProgressHUD'
+    pod 'CryptoSwift'
+    pod 'AlamofireObjectMapper', '~> 2.1'
+    pod 'SDWebImage', '~>3.7'
+end
+
+target 'Travel QueueTests' do
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'JGProgressHUD'
+    pod 'CryptoSwift'
+    pod 'AlamofireObjectMapper', '~> 2.1'
+    pod 'SDWebImage', '~>3.7'
+end
+
+target 'Travel QueueUITests' do
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'JGProgressHUD'
+    pod 'CryptoSwift'
+    pod 'AlamofireObjectMapper', '~> 2.1'
+    pod 'SDWebImage', '~>3.7'
+end
