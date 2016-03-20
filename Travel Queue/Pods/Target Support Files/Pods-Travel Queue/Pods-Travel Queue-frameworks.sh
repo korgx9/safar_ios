@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Travel Queue/CryptoSwift.framework"
   install_framework "Pods-Travel Queue/JGProgressHUD.framework"
   install_framework "Pods-Travel Queue/ObjectMapper.framework"
+  install_framework "Pods-Travel Queue/SDWebImage.framework"
   install_framework "Pods-Travel Queue/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -97,5 +98,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Travel Queue/CryptoSwift.framework"
   install_framework "Pods-Travel Queue/JGProgressHUD.framework"
   install_framework "Pods-Travel Queue/ObjectMapper.framework"
+  install_framework "Pods-Travel Queue/SDWebImage.framework"
   install_framework "Pods-Travel Queue/SwiftyJSON.framework"
 fi

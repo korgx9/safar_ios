@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import CryptoSwift
 import ObjectMapper
+import SDWebImage
 
 class APIRequester {
     
@@ -31,6 +32,8 @@ class APIRequester {
     private let DriverInfoByClientQueueId = BASE_URL + "getDqueuByCq/"
     private let DriverClientsByQueueId = BASE_URL + "getCqueuByDq/"
     private let DqByCqCompleted = BASE_URL + "getDqueuByCqCompleted/"
+    private let DriverVehiclePhotoUpload = BASE_URL + "upload/"
+    private let DriverVehiclePhotoDownload = BASE_URL + "getImageforDq/"
     
     
     private let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -273,6 +276,33 @@ class APIRequester {
         }
     }
     
+    func uploadDriverVehiclePhotoByQueueId(id: Int, image: UIImage) {
+        Alamofire.upload(.POST, DriverVehiclePhotoUpload + id.description, multipartFormData: { multipartFormData in
+                multipartFormData.appendBodyPart(data: UIImageJPEGRepresentation(image, 98)!,
+                    name: "file",
+                    fileName: "driver_" + self.user!.id!.description + "_photo_" + id.description,
+                    mimeType: "image/jpg")
+            }, encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .Success(let upload, _, _):
+                upload.responseJSON { response in
+                    debugPrint(response)
+                }
+            case .Failure(let encodingError):
+                print(encodingError)
+            }}
+        )
+    }
+    
+    func downloadDriverVehicleImageByQueueId(id: Int, imageView: UIImageView) {
+        let block: SDWebImageCompletionBlock! = {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL!) -> Void in
+            print(image)
+            print(error)
+            print(imageURL)
+        }
+        print(DriverVehiclePhotoDownload + id.description)
+        imageView.sd_setImageWithURL(NSURL(string: DriverVehiclePhotoDownload + id.description), completed: block)
+    }
     
     /*
     public JSONObject Trip_Reject(long QID, long DQID, String reason, String apiUrl) {

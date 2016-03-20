@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSForegroundColorAttributeName: Variables.Colors.TabBar.Item.TextSelected], forState:.Selected)
         
+        //Set window image
+        window!.backgroundColor = UIColor(patternImage: UIImage(named: "mainBackground")!)
+        
         return true
     }
 

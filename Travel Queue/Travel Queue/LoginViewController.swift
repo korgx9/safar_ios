@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginField: UITextField!
@@ -16,6 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerButton: UIButton!
     
     private let apiRequester = APIRequester.sharedInstance
+    private let utilities = Utilities()
     private let mainPageSegue = "MainPageSegue"
     private let registerPageSegue = "RegisterSegue"
     
@@ -33,7 +35,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
-        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -56,6 +57,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        utilities.addBottomBorderTo(loginField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(passwordField, color: UIColor.whiteColor())
+        utilities.addBordersToButtonWithColor(loginButton, color: UIColor.whiteColor(), width: 2.0, cornerRadius: 3.0)
+        utilities.textFieldPlaceholderColor(loginField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(passwordField, color: UIColor.whiteColor())
+    }
+    
     func dismissKeyboard(){
         view.endEditing(true)
     }
@@ -76,7 +86,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
             else {
-//                Utilities.showProgressHud(NSLocalizedString("Registering", comment: "Registering title on hud"), forView: self.view)
+                utilities.showProgressHud(NSLocalizedString("Login", comment: "Registering title on hud"), forView: view)
                 apiRequester.login(loginField.text!, password: passwordField.text!)
             }
         }
@@ -95,6 +105,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func onUserLoggedIn(notification: NSNotification) {
+        utilities.hideProgressHud()
         switch notification.object!.integerValue {
         case LOGIN_SUCCESS..<Int.max:
             apiRequester.getUserById(notification.object!.integerValue)

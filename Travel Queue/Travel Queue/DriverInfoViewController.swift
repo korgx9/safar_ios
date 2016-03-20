@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class DriverInfoViewController: UIViewController {
     @IBOutlet weak var driverFullNameField: UITextField!
@@ -28,8 +29,20 @@ class DriverInfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = NSLocalizedString("Driver details", comment: "About driver view title")
+        
         acceptDriverButton.layer.cornerRadius = 3.0
         declineDriverButton.layer.cornerRadius = 3.0
+        
+        let myBackButton:UIButton = UIButton()
+        myBackButton.addTarget(self, action: "popToRoot:", forControlEvents: UIControlEvents.TouchUpInside)
+        myBackButton.setTitle(NSLocalizedString("Back", comment: "Navigation back button on about driver view"), forState: UIControlState.Normal)
+        myBackButton.sizeToFit()
+        let myCustomBackButtonItem:UIBarButtonItem = UIBarButtonItem(customView: myBackButton)
+        self.navigationItem.leftBarButtonItem  = myCustomBackButtonItem
+        
+        vehicleImage.clipsToBounds = false
+        vehicleImage.layer.masksToBounds = true
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,11 +66,14 @@ class DriverInfoViewController: UIViewController {
         if let queueId = queue?.id {
             apiRequester.getDriverInfoByClientOrderId(queueId)
         }
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.DriverInfo)
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
     
     func onDriverInfoLoaded(notification: NSNotification) {
@@ -68,6 +84,8 @@ class DriverInfoViewController: UIViewController {
             vehicleModelField.text = driverInfo.carModel
             carSeatPriceField.text = driverInfo.price.description
             self.driverInfo = driverInfo
+            
+            apiRequester.downloadDriverVehicleImageByQueueId(driverInfo.dqid, imageView: vehicleImage)
         }
     }
     
@@ -103,14 +121,8 @@ class DriverInfoViewController: UIViewController {
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func popToRoot(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    */
-
 }

@@ -97,6 +97,7 @@ class ClientQueuesTableViewController: UITableViewController {
 //        cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
         
         print("Client order ID = \(queues![indexPath.row].id)")
+        print("Client order STATUS = \(queues![indexPath.row].status)")
         
         switch queues![indexPath.row].status! {
         case ORDER_PARTIAL_COMPLETED,
@@ -128,7 +129,8 @@ class ClientQueuesTableViewController: UITableViewController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let driverDetailsViewController = storyboard.instantiateViewControllerWithIdentifier("DriverInfo") as! DriverInfoViewController
                     driverDetailsViewController.queue = queue
-                    self.presentViewController(driverDetailsViewController, animated: true, completion: nil)
+                    let navigation = UINavigationController(rootViewController: driverDetailsViewController)
+                    self.presentViewController(navigation, animated: true, completion: nil)
             })
             
             let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"),

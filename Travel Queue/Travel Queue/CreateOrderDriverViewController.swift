@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var fromCityTextField: UITextField!
     @IBOutlet weak var toCityTextField: UITextField!
     @IBOutlet weak var dateOfDepartureField: UITextField!
@@ -21,8 +22,11 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
 
     @IBOutlet weak var placeOrderButton: UIButton!
     
+    private var controller: UIImagePickerController?
     private var apiRequester = APIRequester.sharedInstance
     private var activeTextField = UITextField()
+    private var chosenImage: UIImage?
+    
     private let OPERATION_FAILED = -1
     private let OPERATION_SUCCESS = 0
     private let NO_ENOUGH_BALANCE = -2
@@ -136,16 +140,13 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
     
-    @IBAction func uploadPhotoButtonTapped(sender: UIButton) {
-        let alert = Utilities.showOKAlert("Under", message: "Construction")
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
     
     func onDriverPostedOrder(notification: NSNotification) {
         var title = ""
         var message = ""
         
-        switch (notification.object!.integerValue) {
+        let operationValue = notification.object!.integerValue
+        switch (operationValue) {
         case OPERATION_FAILED:
             title = NSLocalizedString("Error", comment: "Alert title if error happened when driver creates order")
             message = NSLocalizedString("Something went wrong. Please, try later", comment: "Alert message if error happened when driver creates order")
@@ -153,6 +154,9 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
         case OPERATION_SUCCESS..<Int.max:
             title = NSLocalizedString("Success", comment: "Alert title if driver succesfully created queue")
             message = NSLocalizedString("Your order successfully created", comment: "Alert message if error happened when driver creates order")
+            if chosenImage != nil {
+                apiRequester.uploadDriverVehiclePhotoByQueueId(operationValue, image: chosenImage!)
+            }
             break
         case NO_ENOUGH_BALANCE:
             title = NSLocalizedString("Warning", comment: "Alert title if driver has no enough money")
@@ -170,5 +174,119 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     
         let alert = Utilities.showOKAlert(title, message: message)
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Upload image methods
+    @IBAction func uploadPhotoButtonTapped(sender: UIButton) {
+        openPhotoGallery()
+    }
+    
+    func openPhotoGallery() {
+        let alertController = UIAlertController(
+            title: nil,
+            message: NSLocalizedString("Add photoes of your vehicle", comment: "Alert title on choosing picutre on creating Ad page"),
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("Take photo", comment: "Take Photo from camera"),
+            style: .Default,
+            handler: {(action: UIAlertAction) in
+                self.openLibrary(UIImagePickerControllerSourceType.Camera)
+        }))
+        
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("Photo library", comment: "Take photo from library"),
+            style: .Default,
+            handler: {(action: UIAlertAction) in
+                self.openLibrary(UIImagePickerControllerSourceType.PhotoLibrary)
+        }))
+        
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("Dismiss", comment: "Dismiss alert action shit on upload photo"),
+            style: .Default,
+            handler: nil
+            ))
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func isCameraAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(.Camera)
+    }
+    
+    func cameraSupportsMedia(mediaType: String, sourceType: UIImagePickerControllerSourceType) -> Bool {
+        if let availableMediaTypes = UIImagePickerController.availableMediaTypesForSourceType(sourceType) as [String]? {
+            for type in availableMediaTypes {
+                if type == mediaType {
+                    return true
+                }
+                return true
+            }
+        }
+        return false
+    }
+    
+    func doesCameraSupportShootingVideos() -> Bool {
+        return cameraSupportsMedia(kUTTypeMovie as String, sourceType: .Camera)
+    }
+    
+    func doesCameraSupportTakingPhotos() -> Bool {
+        return cameraSupportsMedia(kUTTypeImage as String, sourceType: .Camera)
+    }
+    
+    func isFrontCameraAvailable() -> Bool {
+        return UIImagePickerController.isCameraDeviceAvailable(.Front)
+    }
+    
+    func isRearCameraAvailable() -> Bool {
+        return UIImagePickerController.isCameraDeviceAvailable(.Rear)
+    }
+    
+    func isFlashAvailableOnFrontCamera() -> Bool {
+        return UIImagePickerController.isFlashAvailableForCameraDevice(.Front)
+    }
+    
+    func isFlashAvailableOnRearCamera() -> Bool{
+        return UIImagePickerController.isFlashAvailableForCameraDevice(.Rear)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let mediaType:AnyObject? = info[UIImagePickerControllerMediaType]
+        if let type:AnyObject = mediaType {
+            if type is String {
+                let stringType = type as! String
+                if stringType == kUTTypeMovie as NSString {
+                    let urlOfVideo = info[UIImagePickerControllerMediaURL] as? NSURL
+                    if let url = urlOfVideo {
+                        print("Video URL = \(url)")
+                    }
+                }
+                else if stringType == kUTTypeImage as NSString {
+                    let image: AnyObject? = info[UIImagePickerControllerOriginalImage]
+                    
+                    if let theImage: AnyObject = image {
+                        chosenImage = Utilities.rotateCameraImageToProperOrientation(theImage as! UIImage, maxResolution: 640)
+                        vehiclePhotoUploadButton.setTitle(NSLocalizedString("Photo chosen", comment: "Image upload button title on driver info view when image already chosen"), forState: .Normal)
+                    }
+                }
+            }
+        }
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func openLibrary(sourceType: UIImagePickerControllerSourceType) {
+        if isCameraAvailable() && doesCameraSupportTakingPhotos() {
+            controller = UIImagePickerController()
+            if let theController = controller {
+                theController.mediaTypes = [kUTTypeImage as String]
+                theController.allowsEditing = true
+                theController.delegate = self
+                theController.sourceType = sourceType
+                self.presentViewController(theController, animated: true, completion: nil)
+            }
+            else {
+                print("Camera is not available")
+            }
+        }
     }
 }

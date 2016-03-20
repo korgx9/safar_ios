@@ -13,6 +13,7 @@
 		6F1E4ACA1C26E59F009299A9 /* CreateOrderPassengerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1E4AC91C26E59F009299A9 /* CreateOrderPassengerViewController.swift */; };
 		6F20ABBF1C2321750018C2B9 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */; };
 		6F354C751C25B20A00AD8D89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F354C741C25B20A00AD8D89 /* User.swift */; };
+		6F3F761A1C8402BD001A42F1 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */; };
 		6F445A461C510E6100701CF7 /* DriverInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F445A451C510E6100701CF7 /* DriverInfoViewController.swift */; };
 		6F445A481C51146100701CF7 /* DriverInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F445A471C51146100701CF7 /* DriverInfo.swift */; };
 		6F5F3C011C56575500D9470E /* DriverClientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */; };
@@ -72,6 +73,7 @@
 		6F1E4AC91C26E59F009299A9 /* CreateOrderPassengerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrderPassengerViewController.swift; sourceTree = "<group>"; };
 		6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
 		6F354C741C25B20A00AD8D89 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		6F445A451C510E6100701CF7 /* DriverInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverInfoViewController.swift; sourceTree = "<group>"; };
 		6F445A471C51146100701CF7 /* DriverInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverInfo.swift; sourceTree = "<group>"; };
 		6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverClientsTableViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				6FA84D951C1DB86000E180BB /* Travel_Queue-Bridging-Header.h */,
 				6FE10E881BC5804F00D0574D /* Assets.xcassets */,
 				6FE10E8A1BC5804F00D0574D /* LaunchScreen.storyboard */,
+				6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */,
 				6FE10E8D1BC5804F00D0574D /* Info.plist */,
 			);
 			path = "Travel Queue";
@@ -519,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FB9DFE21C3941CC0085B6FF /* ClientQueueTableViewCell.swift in Sources */,
+				6F3F761A1C8402BD001A42F1 /* LaunchScreenViewController.swift in Sources */,
 				6FD17B241BE7DA1000D74CB8 /* SwitcherQueueViewController.swift in Sources */,
 				6F445A461C510E6100701CF7 /* DriverInfoViewController.swift in Sources */,
 				6FD84D6A1BC58ECE00D0ECAB /* Variables.swift in Sources */,
