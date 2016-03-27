@@ -10,31 +10,61 @@ import UIKit
 import JGProgressHUD
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var codeField: UITextField!
     @IBOutlet weak var loginField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var safarLogo: UILabel!
+    @IBOutlet weak var safarLogoImage: UIImageView!
+    @IBOutlet weak var safarLogoImageBackground: UITextField!
     
+    @IBOutlet weak var logoConstraint: NSLayoutConstraint!
     private let apiRequester = APIRequester.sharedInstance
     private let utilities = Utilities()
     private let mainPageSegue = "MainPageSegue"
     private let registerPageSegue = "RegisterSegue"
+    private var isAnimated = false
     
     private let NO_SUCH_USER = -2
     private let WRONG_USER_OR_PWD = -1
     private let LOGIN_SUCCESS = 0
+    
+    private let codeFieldKey = "codeField"
+    private let phoneFieldKey = "phoneField"
+    private let passwordFieldKey = "passField"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        codeField.delegate = self
         loginField.delegate = self
         passwordField.delegate = self
         loginButton.layer.cornerRadius = 5.0
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        
+        codeField.alpha = 0
+        loginField.alpha = 0
+        passwordField.alpha = 0
+        
+        utilities.setBackgroundImage(self.view)
+        
+        if let codeSaved = NSUserDefaults.standardUserDefaults().stringForKey(codeFieldKey) {
+            codeField.text = codeSaved
+            if let loginSaved = NSUserDefaults.standardUserDefaults().stringForKey(phoneFieldKey) {
+                loginField.text = loginSaved
+                if let password = NSUserDefaults.standardUserDefaults().stringForKey(passwordFieldKey) {
+                    if codeField.text != "" && loginField.text != "" && password != "" {
+                        apiRequester.login(codeField.text! + loginField.text!, password: password)
+                    }
+                }
+            }
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,12 +74,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             selector: "onUserLoggedIn:",
             name: Variables.Notifications.Login,
             object: nil)
-        
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.Login)
+    }
+    
+    func animateLogo() {
+        if !isAnimated {
+            logoConstraint.constant = logoConstraint.constant - 70.0
+            
+            UIView.animateWithDuration(1.5, delay:0, options: .CurveEaseInOut, animations:{ Void in
+                self.view.layoutIfNeeded()
+                self.safarLogo.alpha = 0
+                self.safarLogoImageBackground.alpha = 0.3
+                },
+                completion: {finished -> Void in
+                    UIView.animateWithDuration(0.5, animations:{
+                        self.codeField.alpha = 1.0
+                        self.loginField.alpha = 1.0
+                        self.passwordField.alpha = 1.0
+                })
+            })
+            isAnimated = true
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -61,9 +109,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLayoutSubviews()
         utilities.addBottomBorderTo(loginField, color: UIColor.whiteColor())
         utilities.addBottomBorderTo(passwordField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(codeField, color: UIColor.whiteColor())
         utilities.addBordersToButtonWithColor(loginButton, color: UIColor.whiteColor(), width: 2.0, cornerRadius: 3.0)
         utilities.textFieldPlaceholderColor(loginField, color: UIColor.whiteColor())
         utilities.textFieldPlaceholderColor(passwordField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(codeField, color: UIColor.whiteColor())
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        animateLogo()
     }
     
     func dismissKeyboard(){
@@ -87,7 +142,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 utilities.showProgressHud(NSLocalizedString("Login", comment: "Registering title on hud"), forView: view)
-                apiRequester.login(loginField.text!, password: passwordField.text!)
+                apiRequester.login(codeField.text! + loginField.text!, password: passwordField.text!)
             }
         }
         if identifier == registerPageSegue {
@@ -108,6 +163,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         utilities.hideProgressHud()
         switch notification.object!.integerValue {
         case LOGIN_SUCCESS..<Int.max:
+            NSUserDefaults.standardUserDefaults().setObject(self.codeField.text, forKey: self.codeFieldKey)
+            NSUserDefaults.standardUserDefaults().setObject(self.loginField.text, forKey: self.phoneFieldKey)
+
+            if self.passwordField.text != nil && self.passwordField.text != "" {
+                NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: self.passwordFieldKey)
+            }
             apiRequester.getUserById(notification.object!.integerValue)
             performSegueWithIdentifier(mainPageSegue, sender: self)
             break
@@ -123,6 +184,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             break
         case -3..<(-Int.max):
             //ACTIVATE
+
             break
         default:
             print("recieved smth else then known statuses")

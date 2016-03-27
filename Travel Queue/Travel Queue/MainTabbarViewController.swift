@@ -15,9 +15,9 @@ class MainTabbarViewController: UITabBarController {
 
         // Do any additional setup after loading the view.
     
-        self.tabBar.barTintColor = Variables.Colors.TabBar.Background
-        self.tabBar.tintColor = Variables.Colors.TabBar.Tint
-        self.tabBar.translucent = false
+//        self.tabBar.barTintColor = Variables.Colors.TabBar.Background
+//        self.tabBar.tintColor = Variables.Colors.TabBar.Tint
+//        self.tabBar.translucent = false
         
         // Set status bar light
         UIApplication.sharedApplication().statusBarStyle = .Default

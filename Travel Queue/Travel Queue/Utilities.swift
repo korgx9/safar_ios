@@ -95,7 +95,7 @@ class Utilities: NSObject {
         case .RightMirrored :
             let storedHeight = bounds.size.height
             bounds.size.height = bounds.size.width;
-            bounds.size.width = storedHeight;
+            bounds.size.width = storedHeight
             transform = CGAffineTransformMakeScale(-1.0, 1.0);
             transform = CGAffineTransformRotate(transform, CGFloat(M_PI) / 2.0);
         }
@@ -120,13 +120,43 @@ class Utilities: NSObject {
         return imageCopy;
     }
     
+    static func moveFrameOfViewToVerticalPositionWithDuration(view: UIView, position: CGFloat, duration: Double) {
+        var frame: CGRect = view.frame;
+        frame.origin.y = position;
+        
+        UIView.animateWithDuration(duration, animations: {
+            view.frame = frame
+        })
+    }
+    
+    func setBackgroundImage(view: UIView) {
+        //Set window image
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        let bgImage = UIImageView(image: UIImage(named: "mainBackground"))
+        bgImage.center = CGPointMake(view.bounds.size.width / 2, view.bounds.size.height / 2)
+        bgImage.transform = CGAffineTransformMakeScale(screenSize.width / 414, screenSize.height / 736)
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = screenSize
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
+        
+        view.addSubview(blurEffectView)
+        view.sendSubviewToBack(blurEffectView)
+        view.addSubview(bgImage)
+        view.sendSubviewToBack(bgImage)
+    }
+    
     func showProgressHud (title: String, forView: UIView) {
         progressHud.textLabel.text = title
         progressHud.showInView(forView, animated: true)
     }
     
     func showProgressHudWithTick (forView: UIView) {
-        progressHud.textLabel.text = NSLocalizedString("COMPLETE", comment: "Complete hud")
+        progressHud.textLabel.text = NSLocalizedString("Complete", comment: "Complete hud")
         progressHud.showInView(forView)
         //var tickImage = UIImage(named: "ggl")
         //var view = UIImageView(image: tickImage)
@@ -153,11 +183,35 @@ class Utilities: NSObject {
     
     func textFieldPlaceholderColor(textField: UITextField, color: UIColor) {
        if #available(iOS 9.0, *) {
-           UILabel.appearanceWhenContainedInInstancesOfClasses([UITextField.self]).textColor = color
+//           UILabel.appearanceWhenContainedInInstancesOfClasses([UITextField.self]).textColor = color
        }
        else {
            // Fallback on earlier versions
        }
+    }
+    
+    func getToolBar() -> UIView {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        toolBar.translucent = true
+        toolBar.sizeToFit()
+//        toolBar.backgroundColor = Constants.Color.Keyboard.Background
+        
+        let doneButton = UIBarButtonItem(
+            title: NSLocalizedString("Done", comment: "Кнопка выбрать над PickerView"),
+            style: UIBarButtonItemStyle.Plain,
+            target: nil,
+            action: "donePicker:")
+//        doneButton.tintColor = Constants.Color.PickerView.Tint
+        
+        let spaceButton = UIBarButtonItem(
+            barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace,
+            target: nil,
+            action: nil)
+        
+        toolBar.setItems([spaceButton, doneButton], animated: true)
+        toolBar.userInteractionEnabled = true
+        return toolBar
     }
 
 }

@@ -22,6 +22,7 @@ class SwitcherQueueViewController: UIViewController {
         // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
     
     override func didReceiveMemoryWarning() {

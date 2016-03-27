@@ -15,7 +15,7 @@ import SDWebImage
 
 class APIRequester {
     
-    static let BASE_URL = "http://52.33.171.217:8080/"
+    static let BASE_URL = "http://safar.tj:8080/"
     private let SALT = "skey"
     private let Register = BASE_URL + "register"
     private let UserActivate = BASE_URL + "user/activate/"
@@ -25,6 +25,9 @@ class APIRequester {
     private let AddToQueueAsDriver = BASE_URL + "dqueue/add"
     private let UserQueuesAsClientById = BASE_URL + "allqueue/"
     private let UserQueuesAsDriverById = BASE_URL + "alldqueue/"
+    private let CitiesURL = BASE_URL + "locations2/"
+    private let CancelDQueue = BASE_URL + "dcancel/"
+    private let CancelCQueue = BASE_URL + "ccancel/"
     
     //TRIP
     private let TripConfirm = BASE_URL + "confirmtrip/"
@@ -39,6 +42,7 @@ class APIRequester {
     private let notificationCenter = NSNotificationCenter.defaultCenter()
     
     var user: User?
+    var cities: [City]?
     
     class var sharedInstance: APIRequester {
         struct Static {
@@ -92,6 +96,10 @@ class APIRequester {
             switch response.result {
             case .Success:
                 if let responseValue = response.result.value {
+                    // If cities didn't loaded
+                    if self.cities?.count == 0 {
+                        self.getCities()
+                    }
                     self.notificationCenter.postNotificationName(Variables.Notifications.Login, object: responseValue.integerValue)
                 }
                 break
@@ -302,6 +310,55 @@ class APIRequester {
         }
         print(DriverVehiclePhotoDownload + id.description)
         imageView.sd_setImageWithURL(NSURL(string: DriverVehiclePhotoDownload + id.description), completed: block)
+    }
+    
+    func getCities() {
+        Alamofire.request(.GET, CitiesURL).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    self.cities = Mapper<City>().mapArray(responseValue)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
+    
+    func cancelDriverQueue(queueId: Int) {
+        Alamofire.request(.PUT, CancelDQueue + queueId.description).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    self.notificationCenter.postNotificationName(Variables.Notifications.DriverQueueCancelled, object: responseValue.integerValue)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
+    
+    func cancelClientQueue(queueId: Int) {
+        print(CancelCQueue + queueId.description)
+        Alamofire.request(.PUT, CancelCQueue + queueId.description).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    self.notificationCenter.postNotificationName(Variables.Notifications.ClientQueueCancelled, object: responseValue.integerValue)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                break
+            }
+        }
     }
     
     /*

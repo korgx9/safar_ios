@@ -9,11 +9,13 @@
 import UIKit
 
 class LaunchScreenViewController: UIViewController {
+    @IBOutlet weak var backgroundLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        backgroundLabel.layer.cornerRadius = 3.0
     }
 
     override func didReceiveMemoryWarning() {

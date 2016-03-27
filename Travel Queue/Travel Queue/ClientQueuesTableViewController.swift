@@ -13,6 +13,7 @@ class ClientQueuesTableViewController: UITableViewController {
     private var apiRequester = APIRequester.sharedInstance
     private var queues: [Queue]?
     private var clientQueueCellIdentifier = "ClientQueueCellIdentifier"
+    private let utilities = Utilities()
     
     /************Statuses**********/
     private let ORDER_COMPLETED = 0
@@ -39,29 +40,29 @@ class ClientQueuesTableViewController: UITableViewController {
         view.addGestureRecognizer(tap)
         tap.cancelsTouchesInView = false
     }
-    
-    func dismissKeyboard() {}
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        apiRequester.getUserQueuesAsClientById(apiRequester.user!.id!)
-
+        NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.UserQueuesAsClientLoaded)
+        NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.ClientQueueCancelled)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "onUserQueuesAsClientLoaded:",
             name: Variables.Notifications.UserQueuesAsClientLoaded,
             object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "onUserCancelledOrder:",
+            name: Variables.Notifications.ClientQueueCancelled,
+            object: nil)
+        apiRequester.getUserQueuesAsClientById(apiRequester.user!.id!)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.UserQueuesAsClientLoaded)
-    }
-    
-    func onUserQueuesAsClientLoaded(notification: NSNotification) {
-        self.queues = notification.object as? [Queue]
-        tableView.reloadData()
+        NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.ClientQueueCancelled)
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,7 +71,8 @@ class ClientQueuesTableViewController: UITableViewController {
         
         
     }
-
+    func dismissKeyboard() {}
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -96,9 +98,6 @@ class ClientQueuesTableViewController: UITableViewController {
         cell.directionLabel.text = "\(queues![indexPath.row].source!) - \(queues![indexPath.row].destination!)"
 //        cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
         
-        print("Client order ID = \(queues![indexPath.row].id)")
-        print("Client order STATUS = \(queues![indexPath.row].status)")
-        
         switch queues![indexPath.row].status! {
         case ORDER_PARTIAL_COMPLETED,
             ORDER_COMPLETED:
@@ -116,7 +115,6 @@ class ClientQueuesTableViewController: UITableViewController {
         default:
             break
         }
-        //+992985960058
         return cell
     }
     
@@ -135,63 +133,34 @@ class ClientQueuesTableViewController: UITableViewController {
             
             let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"),
                 style: .Default, handler: nil)
+            
+            let cancelOrderAction = UIAlertAction(title: NSLocalizedString("Cancel Order", comment: "Action sheet on client queues button edit"),
+                style: .Default, handler: { Void in
+                    self.utilities.showProgressHud(NSLocalizedString("Request", comment: "HUD message when canceling user order"), forView: self.view)
+                    self.apiRequester.cancelClientQueue(queue.id)
+            })
 
             let cancelAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Action sheet on client queues button dismiss"),
-                style: .Default, handler: nil)
+                style: .Cancel, handler: nil)
 
             if queue.status == ORDER_WAITING_CONFIRMATION {
                 alert.addAction(aboutDriverAction)
             }
-            alert.addAction(editAction)
+//            alert.addAction(editAction)
+            alert.addAction(cancelOrderAction)
             alert.addAction(cancelAction)
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func onUserQueuesAsClientLoaded(notification: NSNotification) {
+        self.queues = notification.object as? [Queue]
+        tableView.reloadData()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func onUserCancelledOrder(notification: NSNotification) {
+        utilities.hideProgressHud()
+        apiRequester.getUserQueuesAsClientById(apiRequester.user!.id!)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

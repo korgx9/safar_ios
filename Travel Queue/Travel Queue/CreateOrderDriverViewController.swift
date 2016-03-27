@@ -21,17 +21,28 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     @IBOutlet weak var tripDepartureTimeField: UITextField!
 
     @IBOutlet weak var placeOrderButton: UIButton!
+    @IBOutlet weak var cancelOrderButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     private var controller: UIImagePickerController?
     private var apiRequester = APIRequester.sharedInstance
     private var activeTextField = UITextField()
     private var chosenImage: UIImage?
+    private let utilities = Utilities()
+    private var customPickerView: UIPickerView?
+    private var fromCity = ""
+    private var toCity = ""
     
     private let OPERATION_FAILED = -1
     private let OPERATION_SUCCESS = 0
     private let NO_ENOUGH_BALANCE = -2
     private let DATE_BEFORE_TODAY = -3
+    
+    //Cancel queue  statuses
+    private let OPERATION_NOT_APPLICABLE = -4
+    private let NON_EXISTANT_OBJECT = -3
 
+    var isUserEditing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +58,17 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
         placeOrderButton.layer.cornerRadius = 3.0
         
         passengersCountField.text = "1"
+        
+        placeOrderButton.hidden = isUserEditing
+        cancelOrderButton.hidden = !isUserEditing
+        
+        let textColor = UIColor.darkGrayColor()
+        fromCityTextField.textColor = textColor
+        toCityTextField.textColor = textColor
+        dateOfDepartureField.textColor = textColor
+        passengersCountField.textColor = textColor
+        
+        registerForKeyboardNotifications()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -55,6 +77,11 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "onDriverPostedOrder:",
             name: Variables.Notifications.PostOrderDriver,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "onDriverCancelledOrder:",
+            name: Variables.Notifications.DriverQueueCancelled,
             object: nil)
     }
     
@@ -75,18 +102,24 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         activeTextField = textField
         if textField == fromCityTextField || textField == toCityTextField {
-            let pickerView = UIPickerView()
-            pickerView.delegate = self
-            pickerView.dataSource = self
-            textField.inputView = pickerView
+            customPickerView = UIPickerView()
+            customPickerView!.delegate = self
+            customPickerView!.dataSource = self
+            textField.inputView = customPickerView
         }
         else if textField == dateOfDepartureField {
             let datePickerView = UIDatePicker()
             datePickerView.datePickerMode = UIDatePickerMode.Date
-            datePickerView.minimumDate = NSDate()
+            let oneDay: NSTimeInterval = 60 * 60 * 24;
+            let twoDaysFromNow = NSDate(timeIntervalSinceNow: oneDay * 2)
+            datePickerView.minimumDate = twoDaysFromNow
             textField.inputView = datePickerView
             datePickerView.addTarget(self, action: Selector("datePickerAction:"), forControlEvents: UIControlEvents.ValueChanged)
         }
+        
+        let customToolBar = utilities.getToolBar()
+        customToolBar.targetForAction("donePicker", withSender: self)
+        textField.inputAccessoryView = customToolBar
         
         return true
     }
@@ -97,15 +130,15 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Variables.cities.count
+        return apiRequester.cities!.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Variables.cities[row]
+        return apiRequester.cities![row].name
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        activeTextField.text = Variables.cities[row]
+        activeTextField.text = apiRequester.cities![row].name
     }
     
     func datePickerAction(sender: UIDatePicker) {
@@ -123,23 +156,20 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
                     message: NSLocalizedString("Please, fill all required fields", comment: "Alert text if user didn't filled all data when creates order"))
                 self.presentViewController(alert, animated: true, completion: nil)
         }
-        else if fromCityTextField.text == toCityTextField.text {
-            let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if error happened"),
-                message: NSLocalizedString("Departure address and Destination address should not be the same", comment: "Alert text if user chosed the same cities"))
-            self.presentViewController(alert, animated: true, completion: nil)
+        else if checkSameCity() {
+        
+        }
+        else if checkRareRoute(true) {
+        
         }
         else {
-            apiRequester.postOrderAsDriver(apiRequester.user!.id!,
-                source: fromCityTextField.text!,
-                destination: toCityTextField.text!,
-                passCount: passengersCountField.text!,
-                duedate: dateOfDepartureField.text!,
-                departTime: tripDepartureTimeField.text!,
-                vehicleModel: vehicleModelField.text!,
-                price: tripPriceField.text!)
+            makeTrip()
         }
     }
     
+    @IBAction func cancelOrderButtonTapped(sender: UIButton) {
+        
+    }
     
     func onDriverPostedOrder(notification: NSNotification) {
         var title = ""
@@ -157,6 +187,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
             if chosenImage != nil {
                 apiRequester.uploadDriverVehiclePhotoByQueueId(operationValue, image: chosenImage!)
             }
+            refreshOrderForm()
             break
         case NO_ENOUGH_BALANCE:
             title = NSLocalizedString("Warning", comment: "Alert title if driver has no enough money")
@@ -174,6 +205,10 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     
         let alert = Utilities.showOKAlert(title, message: message)
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func onDriverCancelledOrder(notification: NSNotification) {
+        print(notification.object as! Int)
     }
     
     //MARK: Upload image methods
@@ -288,5 +323,134 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
                 print("Camera is not available")
             }
         }
+    }
+    
+    func donePicker(sender: AnyObject) {
+        view.endEditing(true);
+        
+        if let selectedRow = customPickerView?.selectedRowInComponent(0) {
+            switch activeTextField {
+            case fromCityTextField:
+                fromCity = apiRequester.cities![selectedRow].name
+                fromCityTextField.text = NSLocalizedString(apiRequester.cities![selectedRow].name, comment: "City name in textField")
+                checkSameCity()
+                checkRareRoute(false)
+                break
+            case toCityTextField:
+                toCity = apiRequester.cities![selectedRow].name
+                toCityTextField.text = NSLocalizedString(apiRequester.cities![selectedRow].name, comment: "City name in textField")
+                checkSameCity()
+                checkRareRoute(false)
+                break
+            case dateOfDepartureField:
+                datePickerAction(activeTextField.inputView as! UIDatePicker)
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func refreshOrderForm() {
+        fromCityTextField.text = nil
+        toCityTextField.text = nil
+        dateOfDepartureField.text = nil
+        passengersCountField.text = nil
+        vehicleModelField.text = nil
+        tripPriceField.text = nil
+        tripDepartureTimeField.text = nil
+    }
+    
+    func registerForKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let info:NSDictionary = notification.userInfo!
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardHeight = Float(keyboardSize.height)
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let keyboardY = Float(screenSize.height) - keyboardHeight
+        let heightOfContainerFrame: CGFloat = 70.0
+        let textboxY = Float(activeTextField.frame.origin.y + activeTextField.frame.size.height + heightOfContainerFrame)
+        
+        if (textboxY > keyboardY) {
+            let newVerticalPosition = CGFloat(keyboardY - textboxY);
+            Utilities.moveFrameOfViewToVerticalPositionWithDuration(view, position: newVerticalPosition, duration: 0.3)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        Utilities.moveFrameOfViewToVerticalPositionWithDuration(self.view, position: 0, duration: 0.3)
+    }
+    
+    func makeTrip() {
+        self.apiRequester.postOrderAsDriver(apiRequester.user!.id!,
+            source: self.fromCity,
+            destination: self.toCity,
+            passCount: self.passengersCountField.text!,
+            duedate: self.dateOfDepartureField.text!,
+            departTime: self.tripDepartureTimeField.text!,
+            vehicleModel: self.vehicleModelField.text!,
+            price: self.tripPriceField.text!)
+    }
+    
+    func checkSameCity() -> Bool {
+        if toCity == fromCity {
+            let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if error happened"),
+                message: NSLocalizedString("Departure address and Destination address should not be the same", comment: "Alert text if user chosed the same cities"))
+            self.presentViewController(alert, animated: true, completion: nil)
+            if activeTextField == toCityTextField {
+                toCity = ""
+            }
+            else {
+                fromCity = ""
+            }
+            activeTextField.text = nil
+            return true
+        }
+        
+        return false
+    }
+    
+    func checkRareRoute(isMakeOrderButtonTapped: Bool) -> Bool {
+        if (fromCity != "" && fromCity != "Душанбе" && toCity != "" && toCity != "Душанбе") {
+            let alert = UIAlertController(title: NSLocalizedString("Warning", comment: "Alert title when user choose rare route"),
+                message: NSLocalizedString("There is a few trips in a month for this route. Do you want to continue" + "?", comment: "Warning message in alert when user choose rare route"), preferredStyle: .Alert)
+            
+            let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: "Alert action Yes"), style: .Default, handler: { Void in
+                if isMakeOrderButtonTapped {
+                    self.makeTrip()
+                }
+                
+            })
+            
+            let noAction = UIAlertAction(title: NSLocalizedString("No", comment: "Alert action Yes"), style: .Cancel, handler: { Void in
+                if isMakeOrderButtonTapped {
+                    self.fromCityTextField.text = nil
+                    self.toCityTextField.text = nil
+                    self.fromCity = ""
+                    self.toCity = ""
+                }
+                else {
+                    if self.activeTextField == self.toCityTextField {
+                        self.toCity = ""
+                    }
+                    else {
+                        self.fromCity = ""
+                    }
+                    self.activeTextField.text = nil
+                }
+            })
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            return true
+        }
+        
+        return false
     }
 }

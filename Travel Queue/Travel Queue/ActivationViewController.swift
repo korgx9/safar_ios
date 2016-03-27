@@ -11,17 +11,21 @@ import UIKit
 class ActivationViewController: UIViewController {
     
     @IBOutlet weak var codeField: UITextField!
+    @IBOutlet weak var approveButton: UIButton!
     
     var username:String!
     private let apiRequester = APIRequester.sharedInstance
     private let mainSegueIdentifier = "MainSegueIdentifier"
+    private let utilities = Utilities()
     private let OPERATION_SUCCESS = 0
     private let WRONG_CODE_ENTERED = -1
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        utilities.setBackgroundImage(view)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -40,6 +44,13 @@ class ActivationViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.Activate)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        utilities.addBottomBorderTo(codeField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(codeField, color: UIColor.whiteColor())
+        utilities.addBordersToButtonWithColor(approveButton, color: UIColor.whiteColor(), width: 2.0, cornerRadius: 3.0)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,6 +67,7 @@ class ActivationViewController: UIViewController {
             }
             else {
                 let code = codeField.text
+                utilities.showProgressHud(NSLocalizedString("Activating", comment: "HUD title when activating"), forView: view)
                 apiRequester.activate(username, code: code!)
             }
         }
@@ -63,6 +75,7 @@ class ActivationViewController: UIViewController {
     }
     
     func onUserRegistered(notification: NSNotification) {
+        utilities.hideProgressHud()
         switch notification.object!.integerValue {
         case OPERATION_SUCCESS..<Int.max:
             apiRequester.getUserById(notification.object!.integerValue)

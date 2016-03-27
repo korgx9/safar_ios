@@ -22,6 +22,8 @@ class SwitcherViewController: UIViewController {
         // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        UITextField.appearance().textColor = UIColor.blackColor()
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
 
     override func didReceiveMemoryWarning() {

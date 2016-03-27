@@ -13,6 +13,7 @@ class DriverClientsTableViewController: UITableViewController {
     private let apiRequester = APIRequester.sharedInstance
     private var driverClients = [DriverClient]()
     private var reuseIdentifier = "ClientQueueCellIdentifier"
+    private let utilities = Utilities()
     
     var driverQueue: DriverQueue?
 
@@ -25,15 +26,18 @@ class DriverClientsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationController?.navigationBar.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(0.1)
+        
         let clientQueueCellNib = UINib(nibName: "ClientQueueTableViewCell", bundle: nil)
         tableView.registerNib(clientQueueCellNib, forCellReuseIdentifier: reuseIdentifier)
         
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let doneBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "dismissView")
+        let doneBarButton = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close button title on passengers list view"),
+            style: UIBarButtonItemStyle.Done, target: self, action: "dismissView")
         
-        navigationItem.rightBarButtonItem = doneBarButton
+        navigationItem.leftBarButtonItem = doneBarButton
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -47,7 +51,7 @@ class DriverClientsTableViewController: UITableViewController {
             apiRequester.getDriverClientsByQueueId(driverQueueId)
         }
         
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+//        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     func dismissView() {
@@ -92,12 +96,13 @@ class DriverClientsTableViewController: UITableViewController {
         cell.passengersCountLabel.text = NSLocalizedString("Passengers", comment: "Passegners count on client queues cell") + ": " + driverClients[indexPath.row].count.description
         cell.dateLabel.text = driverClients[indexPath.row].phoneNo
         cell.directionLabel.text = driverClients[indexPath.row].fullName
+        cell.statusImage.image = UIImage(named: "call")
 
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .Alert)
         alert.title = NSLocalizedString("Calling", comment: "ALert title when driver wants to call to passenger")
         
@@ -117,50 +122,7 @@ class DriverClientsTableViewController: UITableViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     Ещё надо Добавить Душанбе - Турсунзаде, Душанбе-Куляб, Душанбе -Кургантеппа, Душанбе- Вахдат, Душанбе- Ромит! И Душанбе-Варзоб
+     */
 }

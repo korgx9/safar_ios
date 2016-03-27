@@ -12,33 +12,42 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var apiRequester = APIRequester.sharedInstance
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        // Loading One Time data from server
+        apiRequester.getCities()
         
         // Set status bar light
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         //Navigation bar colors
-        UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
-        UINavigationBar.appearance().tintColor = Variables.Colors.NavigationBar.Tint
-        UINavigationBar.appearance().barTintColor = Variables.Colors.NavigationBar.Background
-        UINavigationBar.appearance().translucent = false
+//        UINavigationBar.appearance().titleTextAttributes =
+//            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
+//        UINavigationBar.appearance().tintColor = Variables.Colors.NavigationBar.Tint
         
         //Segment Controller GLOBAL Settings
-        UISegmentedControl.appearance().tintColor = Variables.Colors.SegmentSwitcher.Tint
-        UISegmentedControl.appearance().backgroundColor = Variables.Colors.SegmentSwitcher.Background
+//        UISegmentedControl.appearance().tintColor = Variables.Colors.SegmentSwitcher.Tint
+//        UISegmentedControl.appearance().backgroundColor = Variables.Colors.SegmentSwitcher.Background
         
         //Tabbar colors
-        UITabBarItem.appearance().setTitleTextAttributes(
-            [NSForegroundColorAttributeName: Variables.Colors.TabBar.Item.TextNormal], forState:.Normal)
-        UITabBarItem.appearance().setTitleTextAttributes(
-            [NSForegroundColorAttributeName: Variables.Colors.TabBar.Item.TextSelected], forState:.Selected)
+//        UITabBarItem.appearance().setTitleTextAttributes(
+//            [NSForegroundColorAttributeName: Variables.Colors.TabBar.Item.TextNormal], forState:.Normal)
+//        UITabBarItem.appearance().setTitleTextAttributes(
+//            [NSForegroundColorAttributeName: Variables.Colors.TabBar.Item.TextSelected], forState:.Selected)
         
-        //Set window image
-        window!.backgroundColor = UIColor(patternImage: UIImage(named: "mainBackground")!)
+        // Override point for customization after application launch.
+        // Sets background to a blank/empty image
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        // Sets shadow (line below the bar) to a blank image
+        UINavigationBar.appearance().shadowImage = UIImage()
+        // Sets the translucent background color
+        UINavigationBar.appearance().backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        // Set translucent. (Default value is already true, so this can be removed if desired.)
+        UINavigationBar.appearance().translucent = true
+        
         
         return true
     }
@@ -64,7 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

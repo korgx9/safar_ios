@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
     
     private let apiRequester = APIRequester.sharedInstance
     private let activationSegueIdentifier = "activationSegue"
+    private let utilities = Utilities()
     
     private let USER_ALREADY_EXISTS = -2
     private let MIN_PASSWORD_LENGTH_ERROR = -3
@@ -40,7 +41,22 @@ class RegisterViewController: UIViewController {
             name: Variables.Notifications.Regiser,
             object: nil)
         
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        utilities.setBackgroundImage(view)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        utilities.addBottomBorderTo(nameField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(surnameField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(phoneField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(passwordField, color: UIColor.whiteColor())
+        
+        utilities.textFieldPlaceholderColor(nameField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(surnameField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(phoneField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(passwordField, color: UIColor.whiteColor())
+        
+        utilities.addBordersToButtonWithColor(registerButton, color: UIColor.whiteColor(), width: 2.0, cornerRadius: 3.0)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -62,7 +78,7 @@ class RegisterViewController: UIViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
             else {
-//                Utilities.showProgressHud(NSLocalizedString("Registering", comment: "Registering title on hud"), forView: self.view)
+                utilities.showProgressHud(NSLocalizedString("Registering", comment: "Registering title on hud"), forView: self.view)
                 apiRequester.register(phoneField.text!, password: passwordField.text!, name: nameField.text!, surname: surnameField.text!)
             }
         }
@@ -77,6 +93,7 @@ class RegisterViewController: UIViewController {
     }
     
     func onUserRegistered(notification: NSNotification) {
+        utilities.hideProgressHud()
         switch notification.object!.integerValue {
         case OPERATION_SUCCESS..<Int.max:
             print("received \(notification.object?.integerValue)")

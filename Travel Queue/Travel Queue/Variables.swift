@@ -23,9 +23,11 @@ struct Variables {
         static let ConfirmDriver            = "ConfirmDriverNotificationKey"
         static let RejectDriver             = "RejectDriverNotificationKey"
         static let DriverClients            = "DriverClientsNotificationKey"
+        static let DriverQueueCancelled     = "DriverQueueCancelledNotificationKey"
+        static let ClientQueueCancelled     = "ClientQueueCancelledNotificationKey"
     }
     
-    static let cities = ["", "Душанбе", "Хорог", "Куляб", "Ходжент"]
+//    static let cities = ["", "Душанбе", "Хорог", "Куляб", "Ходжент"]
     
     struct Colors {
         struct NavigationBar {
