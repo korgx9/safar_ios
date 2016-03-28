@@ -155,7 +155,9 @@ class DriverQueuesTableViewController: UITableViewController {
             alert.addAction(cancelOrderAction)
             alert.addAction(cancelAction)
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            if queue.status != ORDER_CANCELLED {
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
     }
     

@@ -25,6 +25,10 @@ class ActivationViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
+        self.navigationController?.navigationBar.tintColor = Variables.Colors.NavigationBar.Tint
         utilities.setBackgroundImage(view)
     }
     

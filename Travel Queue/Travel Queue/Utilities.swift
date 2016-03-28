@@ -213,5 +213,25 @@ class Utilities: NSObject {
         toolBar.userInteractionEnabled = true
         return toolBar
     }
+    
+    func callToCallcenter() -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .Alert)
+        alert.title = NSLocalizedString("Calling", comment: "ALert title when driver wants to call to passenger")
+        
+        alert.message = NSLocalizedString("Call to call-center", comment: "ALert description when driver wants to call to passenger")
+        
+        let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: "Action sheet on client queues button about driver"),
+                                      style: .Default, handler: {(alert: UIAlertAction!) in
+                                        Utilities.callToNumber("+992987778866")
+        })
+        
+        let noAction = UIAlertAction(title: NSLocalizedString("No", comment: "Action sheet on client queues button edit"),
+                                     style: .Cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        return alert
+    }
 
 }

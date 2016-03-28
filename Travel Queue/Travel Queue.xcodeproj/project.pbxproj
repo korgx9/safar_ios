@@ -41,6 +41,7 @@
 		6FE10E971BC5805000D0574D /* Travel_QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE10E961BC5805000D0574D /* Travel_QueueTests.swift */; };
 		6FE10EA21BC5805000D0574D /* Travel_QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE10EA11BC5805000D0574D /* Travel_QueueUITests.swift */; };
 		6FF061E71BF8AF190063F4B3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */; };
+		6FFCF5A51CA8F85900EF7828 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6FFCF5A41CA8F85900EF7828 /* Localizable.strings */; };
 		6FFE36421C27EC4A00B6119A /* CreateOrderDriverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */; };
 		E942916E46ABE59D334C5877 /* Pods_Travel_QueueTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B45192976AF33627DDAF41C /* Pods_Travel_QueueTests.framework */; };
 		EDABEF79019024891BFBFA76 /* Pods_Travel_QueueUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68B7CBCD52BCE5ADCCB9EABC /* Pods_Travel_QueueUITests.framework */; };
@@ -81,6 +82,8 @@
 		6F445A471C51146100701CF7 /* DriverInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverInfo.swift; sourceTree = "<group>"; };
 		6F5AB7DE1CA828AA0062D7A0 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		6F5AB7E01CA84E950062D7A0 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		6F5AB7E21CA854900062D7A0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		6F5AB7E31CA854900062D7A0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverClientsTableViewController.swift; sourceTree = "<group>"; };
 		6F66911C1C31A16F00711018 /* ClientQueuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientQueuesTableViewController.swift; sourceTree = "<group>"; };
 		6F66911E1C31A6B800711018 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		6FE10EA11BC5805000D0574D /* Travel_QueueUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Travel_QueueUITests.swift; sourceTree = "<group>"; };
 		6FE10EA31BC5805000D0574D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		6FFCF5A41CA8F85900EF7828 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrderDriverViewController.swift; sourceTree = "<group>"; };
 		98DEB79253512507F583F5D8 /* Pods-Travel Queue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Queue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel Queue/Pods-Travel Queue.debug.xcconfig"; sourceTree = "<group>"; };
 		9D766CFA3D5F2D329374928A /* Pods-Travel QueueTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel QueueTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Travel QueueTests/Pods-Travel QueueTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				6FE10E8A1BC5804F00D0574D /* LaunchScreen.storyboard */,
 				6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */,
 				6FE10E8D1BC5804F00D0574D /* Info.plist */,
+				6FFCF5A41CA8F85900EF7828 /* Localizable.strings */,
 			);
 			path = "Travel Queue";
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FFCF5A51CA8F85900EF7828 /* Localizable.strings in Resources */,
 				6FB9DFE31C3941CC0085B6FF /* ClientQueueTableViewCell.xib in Resources */,
 				6FE10E8C1BC5804F00D0574D /* LaunchScreen.storyboard in Resources */,
 				6FE10E891BC5804F00D0574D /* Assets.xcassets in Resources */,
@@ -596,6 +602,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6FE10E861BC5804F00D0574D /* Base */,
+				6F5AB7E21CA854900062D7A0 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -604,6 +611,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6FE10E8B1BC5804F00D0574D /* Base */,
+				6F5AB7E31CA854900062D7A0 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

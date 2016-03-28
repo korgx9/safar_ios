@@ -15,6 +15,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var codeField: UITextField!
     
     private let apiRequester = APIRequester.sharedInstance
     private let activationSegueIdentifier = "activationSegue"
@@ -28,6 +29,9 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
+        self.navigationController?.navigationBar.tintColor = Variables.Colors.NavigationBar.Tint
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -50,11 +54,13 @@ class RegisterViewController: UIViewController {
         utilities.addBottomBorderTo(surnameField, color: UIColor.whiteColor())
         utilities.addBottomBorderTo(phoneField, color: UIColor.whiteColor())
         utilities.addBottomBorderTo(passwordField, color: UIColor.whiteColor())
+        utilities.addBottomBorderTo(codeField, color: UIColor.whiteColor())
         
         utilities.textFieldPlaceholderColor(nameField, color: UIColor.whiteColor())
         utilities.textFieldPlaceholderColor(surnameField, color: UIColor.whiteColor())
         utilities.textFieldPlaceholderColor(phoneField, color: UIColor.whiteColor())
         utilities.textFieldPlaceholderColor(passwordField, color: UIColor.whiteColor())
+        utilities.textFieldPlaceholderColor(codeField, color: UIColor.whiteColor())
         
         utilities.addBordersToButtonWithColor(registerButton, color: UIColor.whiteColor(), width: 2.0, cornerRadius: 3.0)
     }
@@ -71,7 +77,7 @@ class RegisterViewController: UIViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject!) -> Bool {
 
         if identifier == activationSegueIdentifier {
-            if nameField.text == "" || surnameField.text == "" || phoneField.text == "" || passwordField == "" {
+            if nameField.text == "" || surnameField.text == "" || phoneField.text == "" || passwordField == "" || codeField.text == "" {
                 let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if error happened"),
                     message: NSLocalizedString("Please, fill all required fields", comment: "Alert text if user didn't filled all data when registering"))
                 
@@ -79,7 +85,7 @@ class RegisterViewController: UIViewController {
             }
             else {
                 utilities.showProgressHud(NSLocalizedString("Registering", comment: "Registering title on hud"), forView: self.view)
-                apiRequester.register(phoneField.text!, password: passwordField.text!, name: nameField.text!, surname: surnameField.text!)
+                apiRequester.register(codeField.text! + phoneField.text!, password: passwordField.text!, name: nameField.text!, surname: surnameField.text!)
             }
         }
         return false

@@ -1,0 +1,228 @@
+
+/* Class = "UITextField"; placeholder = "About Driver"; ObjectID = "1QZ-Mp-b3s"; */
+"1QZ-Mp-b3s.placeholder" = "О водителе";
+
+/* Class = "UITabBarItem"; title = "My Orders"; ObjectID = "2Bh-w2-KCQ"; */
+"2Bh-w2-KCQ.title" = "Мои заказы";
+
+/* Class = "UIButton"; normalTitle = "Forgot password?"; ObjectID = "4sc-rq-wJ3"; */
+"4sc-rq-wJ3.normalTitle" = "Забыли пароль?";
+
+/* Class = "UITextField"; placeholder = "Code"; ObjectID = "8f5-qj-Udr"; */
+"8f5-qj-Udr.placeholder" = "Код";
+
+/* Class = "UITextField"; text = "+992"; ObjectID = "8f5-qj-Udr"; */
+"8f5-qj-Udr.text" = "+992";
+
+/* Class = "UILabel"; text = "Pickup address:"; ObjectID = "8mq-gm-Awk"; */
+"8mq-gm-Awk.text" = "Откуда забрать:";
+
+/* Class = "UITextField"; placeholder = "Enter your surname"; ObjectID = "9p5-Yi-oj7"; */
+"9p5-Yi-oj7.placeholder" = "Введите вашу фамилию";
+
+/* Class = "UITextField"; placeholder = "About Driver"; ObjectID = "An2-DX-uXr"; */
+"An2-DX-uXr.placeholder" = "О водителе";
+
+/* Class = "UILabel"; text = "Your account number is:"; ObjectID = "B9w-c7-8Qx"; */
+"B9w-c7-8Qx.text" = "Номер вашего аккаунта:";
+
+/* Class = "UIViewController"; title = "Log In"; ObjectID = "BYZ-38-t0r"; */
+"BYZ-38-t0r.title" = "Вход";
+
+/* Class = "UITextField"; placeholder = "Choose date"; ObjectID = "DWr-o9-VUQ"; */
+"DWr-o9-VUQ.placeholder" = "Выберать дату поездки";
+
+/* Class = "UIButton"; normalTitle = "Choose photo"; ObjectID = "EjK-b6-wfx"; */
+"EjK-b6-wfx.normalTitle" = "Выбрать фотографию";
+
+/* Class = "UILabel"; text = "Upload you vehicle photoes:"; ObjectID = "EvQ-YN-cL5"; */
+"EvQ-YN-cL5.text" = "Загрузить фото автомобиля:";
+
+/* Class = "UITextField"; placeholder = "Choose city"; ObjectID = "F4C-rb-aGf"; */
+"F4C-rb-aGf.placeholder" = "Выбрать город";
+
+/* Class = "UILabel"; text = "Vehicle model:"; ObjectID = "HhM-4o-Kp4"; */
+"HhM-4o-Kp4.text" = "Модель автомобиля:";
+
+/* Class = "UILabel"; text = "Pickup from home"; ObjectID = "IQj-CB-GCd"; */
+"IQj-CB-GCd.text" = "Забрать из дома";
+
+/* Class = "UIButton"; normalTitle = "CANCEL ORDER"; ObjectID = "IRo-eg-Ndx"; */
+"IRo-eg-Ndx.normalTitle" = "Отменить заказ";
+
+/* Class = "UITabBarItem"; title = "Create Order"; ObjectID = "Iav-1e-9MW"; */
+"Iav-1e-9MW.title" = "Создать заказ";
+
+/* Class = "UITextField"; placeholder = "Choose date"; ObjectID = "JRg-Tk-gvc"; */
+"JRg-Tk-gvc.placeholder" = "Выбрать дату поездки";
+
+/* Class = "UILabel"; text = "Account"; ObjectID = "KvV-5X-QoY"; */
+"KvV-5X-QoY.text" = "Аккаунт";
+
+/* Class = "UISegmentedControl"; L1V-MM-XnN.segmentTitles[0] = "Passenger"; ObjectID = "L1V-MM-XnN"; */
+"L1V-MM-XnN.segmentTitles[0]" = "Пассажир";
+
+/* Class = "UISegmentedControl"; L1V-MM-XnN.segmentTitles[1] = "Driver"; ObjectID = "L1V-MM-XnN"; */
+"L1V-MM-XnN.segmentTitles[1]" = "Водитель";
+
+/* Class = "UILabel"; text = "Trip time:"; ObjectID = "L3g-yi-5xn"; */
+"L3g-yi-5xn.text" = "Время поездки:";
+
+/* Class = "UITextField"; placeholder = "Enter vehicle model"; ObjectID = "LUp-OR-JbA"; */
+"LUp-OR-JbA.placeholder" = "Введите модель автомобиля";
+
+/* Class = "UITextField"; placeholder = "Enter confirmation code"; ObjectID = "Mav-oW-QUw"; */
+"Mav-oW-QUw.placeholder" = "Введите номер активации";
+
+/* Class = "UILabel"; text = "subscription:"; ObjectID = "NIE-0I-vmw"; */
+"NIE-0I-vmw.text" = "subscription:";
+
+/* Class = "UILabel"; text = "Exit"; ObjectID = "Ns9-pc-EAM"; */
+"Ns9-pc-EAM.text" = "Выход";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "O9s-go-7zL"; */
+"O9s-go-7zL.normalTitle" = "Регистрировать";
+
+/* Class = "UITextField"; placeholder = "Enter your name"; ObjectID = "PLb-vr-vKQ"; */
+"PLb-vr-vKQ.placeholder" = "Введите ваше имя";
+
+/* Class = "UITableViewController"; title = "Settings"; ObjectID = "PTo-0W-lgF"; */
+"PTo-0W-lgF.title" = "Меню";
+
+/* Class = "UISegmentedControl"; Pxl-7A-rkO.segmentTitles[0] = "Passenger Trips"; ObjectID = "Pxl-7A-rkO"; */
+"Pxl-7A-rkO.segmentTitles[0]" = "Поездки пассажира";
+
+/* Class = "UISegmentedControl"; Pxl-7A-rkO.segmentTitles[1] = "Driver Trips"; ObjectID = "Pxl-7A-rkO"; */
+"Pxl-7A-rkO.segmentTitles[1]" = "Поездки водителя";
+
+/* Class = "UITextField"; placeholder = "Choose city"; ObjectID = "RKj-31-7Z2"; */
+"RKj-31-7Z2.placeholder" = "Выбрать город";
+
+/* Class = "UILabel"; text = "Passengers count:"; ObjectID = "Vcs-Au-7Gb"; */
+"Vcs-Au-7Gb.text" = "Количество пассажиров:";
+
+/* Class = "UILabel"; text = "Vehicle information"; ObjectID = "Wxb-Fj-jKn"; */
+"Wxb-Fj-jKn.text" = "Информация о машине";
+
+/* Class = "UILabel"; text = "Depart date:"; ObjectID = "X5e-fb-YwM"; */
+"X5e-fb-YwM.text" = "Дата отправления:";
+
+/* Class = "UILabel"; text = "Driver information"; ObjectID = "ZCh-vp-7VG"; */
+"ZCh-vp-7VG.text" = "Информация о водителе";
+
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "ZTq-2u-4dQ"; */
+"ZTq-2u-4dQ.normalTitle" = "Войти";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "ZzB-LD-3IZ"; */
+"ZzB-LD-3IZ.placeholder" = "Пароль";
+
+/* Class = "UILabel"; text = "Use this number to fill your balance"; ObjectID = "ay2-Ih-3oF"; */
+"ay2-Ih-3oF.text" = "Используйте данный номер для пополнения баланса";
+
+/* Class = "UITextField"; placeholder = "Enter your phone number"; ObjectID = "b5w-kE-9VA"; */
+"b5w-kE-9VA.placeholder" = "Введите номер телефона";
+
+/* Class = "UILabel"; text = "Please enter code into the textfield"; ObjectID = "bUC-xd-Xiu"; */
+"bUC-xd-Xiu.text" = "Пожалуйста, введите код";
+
+/* Class = "UIButton"; normalTitle = "CANCEL ORDER"; ObjectID = "bqw-Uk-nca"; */
+"bqw-Uk-nca.normalTitle" = "Отменить поездку";
+
+/* Class = "UITextField"; placeholder = "Enter approx time"; ObjectID = "cLo-W0-XSC"; */
+"cLo-W0-XSC.placeholder" = "Введите время";
+
+/* Class = "UIButton"; normalTitle = "Activate account"; ObjectID = "cik-a2-nfJ"; */
+"cik-a2-nfJ.normalTitle" = "Активировать";
+
+/* Class = "UITextField"; placeholder = "Enter trip price"; ObjectID = "d1e-rw-kwR"; */
+"d1e-rw-kwR.placeholder" = "Введите цену";
+
+/* Class = "UITextField"; placeholder = "Fee for trip"; ObjectID = "dwH-qN-LLj"; */
+"dwH-qN-LLj.placeholder" = "Цена за поездку";
+
+/* Class = "UILabel"; text = "SAFAR"; ObjectID = "etd-kA-iPQ"; */
+"etd-kA-iPQ.text" = "SAFAR";
+
+/* Class = "UITextField"; placeholder = "Enter your address"; ObjectID = "ey2-Nl-aVE"; */
+"ey2-Nl-aVE.placeholder" = "Введите ваш адрес";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "fxE-ay-Fuw"; */
+"fxE-ay-Fuw.normalTitle" = "Регистрация";
+
+/* Class = "UIViewController"; title = "Approve Registration"; ObjectID = "gSS-J5-KDs"; */
+"gSS-J5-KDs.title" = "Подтверждение";
+
+/* Class = "UILabel"; text = "Recommend"; ObjectID = "grr-kD-ldn"; */
+"grr-kD-ldn.text" = "Поделиться";
+
+/* Class = "UIButton"; normalTitle = "SEND REQUEST"; ObjectID = "hRT-Q7-L50"; */
+"hRT-Q7-L50.normalTitle" = "Создать поездку";
+
+/* Class = "UILabel"; text = "From:"; ObjectID = "jot-F3-TVV"; */
+"jot-F3-TVV.text" = "От:";
+
+/* Class = "UITextField"; placeholder = "About Driver"; ObjectID = "kGX-50-USQ"; */
+"kGX-50-USQ.placeholder" = "О водителе";
+
+/* Class = "UILabel"; text = "To:"; ObjectID = "m40-GJ-jkJ"; */
+"m40-GJ-jkJ.text" = "До:";
+
+/* Class = "UILabel"; text = "Depart date:"; ObjectID = "mHa-Zh-bK7"; */
+"mHa-Zh-bK7.text" = "Дата отправления:";
+
+/* Class = "UIButton"; normalTitle = "SEND REQUEST"; ObjectID = "mMb-Y7-Jt7"; */
+"mMb-Y7-Jt7.normalTitle" = "Создать поездку";
+
+/* Class = "UITextField"; placeholder = "Choose city"; ObjectID = "mVJ-e3-8aL"; */
+"mVJ-e3-8aL.placeholder" = "Выбрать город";
+
+/* Class = "UITextField"; placeholder = "N/A"; ObjectID = "nZC-2l-cqg"; */
+"nZC-2l-cqg.placeholder" = "N/A";
+
+/* Class = "UILabel"; text = "Passengers count:"; ObjectID = "oXi-9M-yaG"; */
+"oXi-9M-yaG.text" = "Количеаство пассажиров:";
+
+/* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "pWa-XR-y4w"; */
+"pWa-XR-y4w.placeholder" = "Номер телефона";
+
+/* Class = "UILabel"; text = "Trip price:"; ObjectID = "rvP-OL-AZQ"; */
+"rvP-OL-AZQ.text" = "Цена поездки:";
+
+/* Class = "UITextField"; placeholder = "Vehicle model"; ObjectID = "sHb-qn-05p"; */
+"sHb-qn-05p.placeholder" = "Модель автомобиля";
+
+/* Class = "UILabel"; text = "From:"; ObjectID = "tuK-Gz-I3t"; */
+"tuK-Gz-I3t.text" = "От:";
+
+/* Class = "UILabel"; text = "To:"; ObjectID = "twk-5B-Cfr"; */
+"twk-5B-Cfr.text" = "До:";
+
+/* Class = "UIButton"; normalTitle = "Decline Driver"; ObjectID = "u3a-MA-BHH"; */
+"u3a-MA-BHH.normalTitle" = "Отколнить водителя";
+
+/* Class = "UIViewController"; title = "Sign Up"; ObjectID = "uZa-2z-IDI"; */
+"uZa-2z-IDI.title" = "Регистрация";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "umJ-aT-g01"; */
+"umJ-aT-g01.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Menu"; ObjectID = "uwC-OR-dZH"; */
+"uwC-OR-dZH.title" = "Меню";
+
+/* Class = "UITextField"; placeholder = "Choose city"; ObjectID = "vvn-tK-YDc"; */
+"vvn-tK-YDc.placeholder" = "Выбрать город";
+
+/* Class = "UITextField"; placeholder = "Enter password"; ObjectID = "wcS-wJ-hlF"; */
+"wcS-wJ-hlF.placeholder" = "Введите пароль";
+
+/* Class = "UILabel"; text = "+990000000"; ObjectID = "yO8-Nc-xlj"; */
+"yO8-Nc-xlj.text" = "+990000000";
+
+/* Class = "UIButton"; normalTitle = "Accept Driver"; ObjectID = "zqZ-Us-wKo"; */
+"zqZ-Us-wKo.normalTitle" = "Принять водителя";
+
+/**/
+"lNz-vy-HAc.text" = "Позвонить оператору";
+
+/**/
+"Ac8-ze-7er.normalTitle" = "Позвонить оператору";

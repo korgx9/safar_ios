@@ -34,7 +34,16 @@ class MenuTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         switch indexPath.row {
+        case 1:
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("AccountViewController")
+            let navigation = UINavigationController(rootViewController: vc)
+            self.presentViewController(navigation, animated: true, completion: nil)
+            break
         case 2:
+            self.presentViewController(utilities.callToCallcenter(), animated: true, completion: nil)
+            break
+        case 3:
             let message = NSLocalizedString("Best app to travel in Tajikistan http://safar.tj", comment: "Share text")
             let activityViewController = UIActivityViewController (
                 activityItems: [message as NSString], applicationActivities: nil)
@@ -42,7 +51,7 @@ class MenuTableViewController: UITableViewController {
                                   animated: true,
                                   completion: {})
             break
-        case 3:
+        case 4:
             self.apiRequester.user = nil
             NSUserDefaults.standardUserDefaults().removeObjectForKey(passwordFieldKey)
             NSUserDefaults.standardUserDefaults().synchronize()

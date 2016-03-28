@@ -40,6 +40,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //Navigation colors 
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
+        self.navigationController?.navigationBar.tintColor = Variables.Colors.NavigationBar.Tint
+        
+        
         codeField.delegate = self
         loginField.delegate = self
         passwordField.delegate = self
@@ -191,5 +197,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             print(notification.object?.integerValue)
             break
         }
+    }
+    @IBAction func callToCallCenter(sender: AnyObject) {
+        self.presentViewController(utilities.callToCallcenter(), animated: true, completion: nil)
     }
 }
