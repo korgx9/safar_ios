@@ -127,11 +127,11 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return apiRequester.cities![row].name
+        return NSLocalizedString(apiRequester.cities![row].name, comment: "")
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        activeTextField.text = apiRequester.cities![row].name
+        activeTextField.text = NSLocalizedString(apiRequester.cities![row].name, comment: "")
         isSourceCityIsDushanbe()
     }
     
@@ -168,6 +168,7 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func onUserPostedOrder(notification: NSNotification) {
+        hideProgressHud()
         let alert = Utilities.showOKAlert(NSLocalizedString("Success", comment: "Alert title if success"),
             message: NSLocalizedString("Your order successfully created", comment: "Alert text if client order successfully created"))
         self.presentViewController(alert, animated: true, completion: nil)
@@ -213,8 +214,8 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderPassengerViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderPassengerViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -238,6 +239,7 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func makeTrip() {
+        utilities.showProgressHud(NSLocalizedString("Request", comment: "HUD on creating passenger order"), forView: self.view)
         self.apiRequester.postOrderAsClient(self.apiRequester.user!.id!,
             source: self.fromCity,
             destination: self.toCity,

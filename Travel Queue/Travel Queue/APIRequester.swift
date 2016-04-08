@@ -28,6 +28,7 @@ class APIRequester {
     private let CitiesURL = BASE_URL + "locations2/"
     private let CancelDQueue = BASE_URL + "dcancel/"
     private let CancelCQueue = BASE_URL + "ccancel/"
+    private let DeviceTokenURL = BASE_URL + "usertoken/";//"/usertoken/{user_id}/{token}";"
     
     //TRIP
     private let TripConfirm = BASE_URL + "confirmtrip/"
@@ -40,9 +41,11 @@ class APIRequester {
     
     
     private let notificationCenter = NSNotificationCenter.defaultCenter()
+    private let utilities = Utilities()
     
     var user: User?
     var cities: [City]?
+    var deviceToken: String?
     
     class var sharedInstance: APIRequester {
         struct Static {
@@ -69,6 +72,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -85,6 +89,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -100,11 +105,32 @@ class APIRequester {
                     if self.cities?.count == 0 {
                         self.getCities()
                     }
+                    if self.deviceToken != nil {
+                        self.sendDeviceToken(username)
+                    }
                     self.notificationCenter.postNotificationName(Variables.Notifications.Login, object: responseValue.integerValue)
                 }
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
+                break
+            }
+        }
+    }
+    
+    func sendDeviceToken(phone: String) {
+        print(DeviceTokenURL + phone + "/" + deviceToken!)
+        Alamofire.request(.POST, DeviceTokenURL + phone + "/" + deviceToken! , parameters: nil, encoding: .JSON).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                print(response.result.value)
+                print("device token successfully sent")
+                break
+            case .Failure(let error):
+                print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -147,6 +173,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -174,19 +201,21 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
     }
     
     func getUserQueuesAsClientById(id: Int) {
+        let orderCancelStatus = 4
         Alamofire.request(.GET, UserQueuesAsClientById + id.description).validate().responseJSON {
             response in
             switch response.result {
             case .Success:
                 if let responseValue = response.result.value {            
                     let queues = Mapper<Queue>().mapArray(responseValue)
-                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsClientLoaded, object: queues)
+                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsClientLoaded, object: queues?.filter({$0.status != orderCancelStatus}).reverse())
                 }
                 break
             case .Failure(let error):
@@ -197,13 +226,14 @@ class APIRequester {
     }
     
     func getUserQueuesAsDriverById(id: Int) {
+        let orderCancelStatus = 4
         Alamofire.request(.GET, UserQueuesAsDriverById + id.description).validate().responseJSON {
             response in
             switch response.result {
             case .Success:
                 if let responseValue = response.result.value {
                     let queues = Mapper<DriverQueue>().mapArray(responseValue)
-                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsDriverLoaded, object: queues)
+                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsDriverLoaded, object: queues?.filter({$0.status != orderCancelStatus}).reverse())
                 }
                 break
             case .Failure(let error):
@@ -225,6 +255,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -244,6 +275,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -262,6 +294,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -279,6 +312,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -303,13 +337,14 @@ class APIRequester {
     }
     
     func downloadDriverVehicleImageByQueueId(id: Int, imageView: UIImageView) {
-        let block: SDWebImageCompletionBlock! = {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL!) -> Void in
-            print(image)
-            print(error)
-            print(imageURL)
-        }
-        print(DriverVehiclePhotoDownload + id.description)
-        imageView.sd_setImageWithURL(NSURL(string: DriverVehiclePhotoDownload + id.description), completed: block)
+//        let block: SDWebImageCompletionBlock! = {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL!) -> Void in
+//            print(image)
+//            print(error)
+//            print(imageURL)
+//        }
+//        print(DriverVehiclePhotoDownload + id.description)
+//        imageView.sd_setImageWithURL(NSURL(string: DriverVehiclePhotoDownload + id.description), completed: block)
+        imageView.sd_setImageWithURL(NSURL(string: DriverVehiclePhotoDownload + id.description), placeholderImage: UIImage(named: "noPhoto"), options: .RetryFailed)
     }
     
     func getCities() {
@@ -339,6 +374,7 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
         }
@@ -356,8 +392,18 @@ class APIRequester {
                 break
             case .Failure(let error):
                 print(error)
+                self.NoInternetCheck(error)
                 break
             }
+        }
+    }
+    
+    func NoInternetCheck(error: AnyObject) {
+        utilities.hideProgressHud()
+        print(error.code)
+        if error.code == Variables.Status.Error.NoInternet || error.code == Variables.Status.Error.NoInternet1  {
+            let alert = UIAlertView(title: NSLocalizedString("Внимание", comment: "Warning"), message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
         }
     }
     

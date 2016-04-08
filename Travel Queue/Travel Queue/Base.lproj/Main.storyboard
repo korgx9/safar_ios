@@ -64,7 +64,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" keyboardAppearance="alert" returnKeyType="done"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.64999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-aZ-c78">
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gSz-aZ-c78">
                                 <rect key="frame" x="227" y="155" width="147" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="147" id="8eJ-v1-XYA"/>
@@ -336,7 +336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rty-kn-pHY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1186" y="1244"/>
+            <point key="canvasLocation" x="1198" y="1414"/>
         </scene>
         <!--Client Queues Table View Controller-->
         <scene sceneID="Sym-l5-piM">
@@ -369,7 +369,7 @@
         <!--Approve Registration-->
         <scene sceneID="mrR-dD-vhq">
             <objects>
-                <viewController title="Approve Registration" id="gSS-J5-KDs" customClass="ActivationViewController" customModule="Travel_Queue" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActivationViewController" title="Approve Registration" id="gSS-J5-KDs" customClass="ActivationViewController" customModule="Travel_Queue" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KnC-nR-ftp"/>
                         <viewControllerLayoutGuide type="bottom" id="LV8-YQ-SpZ"/>
@@ -437,9 +437,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="TnY-Pt-uJq" kind="relationship" relationship="viewControllers" id="ISC-kT-QLy"/>
                         <segue destination="bWq-J5-B1J" kind="relationship" relationship="viewControllers" id="FQg-4w-az0"/>
-                        <segue destination="PTo-0W-lgF" kind="relationship" relationship="viewControllers" id="SGR-mq-REO"/>
+                        <segue destination="TnY-Pt-uJq" kind="relationship" relationship="viewControllers" id="pj1-X4-YXj"/>
+                        <segue destination="PTo-0W-lgF" kind="relationship" relationship="viewControllers" id="s87-em-0sc"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuL-mb-oJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -506,7 +506,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5kQ-7z-kWe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2344" y="1244"/>
+            <point key="canvasLocation" x="2200" y="1288"/>
         </scene>
         <!--Driver Queues Table View Controller-->
         <scene sceneID="sf2-su-Db5">
@@ -660,7 +660,7 @@
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter approx time" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cLo-W0-XSC">
                                                 <rect key="frame" x="302" y="335" width="277" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload you vehicle photoes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvQ-YN-cL5">
                                                 <rect key="frame" x="20" y="269" width="160.5" height="14.5"/>
@@ -855,7 +855,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rP-EQ-G1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3867" y="1244"/>
+            <point key="canvasLocation" x="2943" y="1267"/>
         </scene>
         <!--Create Order Passenger View Controller-->
         <scene sceneID="BOF-xG-GOC">
@@ -1058,16 +1058,25 @@
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="About Driver" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1QZ-Mp-b3s">
                                                 <rect key="frame" x="20" y="34" width="560" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Z6g-tg-UUR"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="About Driver" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGX-50-USQ">
                                                 <rect key="frame" x="20" y="72" width="560" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="IXJ-9b-zsU"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="About Driver" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An2-DX-uXr">
                                                 <rect key="frame" x="20" y="110" width="560" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="2gg-SR-UWI"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
                                             </textField>
@@ -1079,35 +1088,31 @@
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vehicle model" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sHb-qn-05p">
                                                 <rect key="frame" x="20" y="175" width="560" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="eZS-EZ-6XI"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Fee for trip" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dwH-qN-LLj">
                                                 <rect key="frame" x="20" y="213" width="560" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="N/A" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZC-2l-cqg">
-                                                <rect key="frame" x="20" y="251" width="560" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0XO-PD-ldr">
-                                                <rect key="frame" x="20" y="301" width="560" height="242.5"/>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqZ-Us-wKo">
-                                                <rect key="frame" x="20" y="552" width="270" height="40"/>
-                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="Vml-Iu-a8c"/>
+                                                    <constraint firstAttribute="height" constant="30" id="lUX-t5-X5D"/>
                                                 </constraints>
-                                                <state key="normal" title="Accept Driver">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="acceptDriverButtonTapped:" destination="lFI-CU-0l5" eventType="touchUpInside" id="uGQ-1k-VoM"/>
-                                                </connections>
-                                            </button>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="N/A" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZC-2l-cqg">
+                                                <rect key="frame" x="20" y="251" width="560" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="d5X-3f-79B"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="248" image="noPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="0XO-PD-ldr">
+                                                <rect key="frame" x="20" y="301" width="560" height="243"/>
+                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3a-MA-BHH">
                                                 <rect key="frame" x="310" y="552" width="270" height="40"/>
                                                 <color key="backgroundColor" red="0.97647058819999999" green="0.60392156860000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1121,10 +1126,22 @@
                                                     <action selector="rejectDriverButtonTapped:" destination="lFI-CU-0l5" eventType="touchUpInside" id="Vz2-6d-KkB"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqZ-Us-wKo">
+                                                <rect key="frame" x="20" y="552" width="270" height="40"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Vml-Iu-a8c"/>
+                                                </constraints>
+                                                <state key="normal" title="Accept Driver">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="acceptDriverButtonTapped:" destination="lFI-CU-0l5" eventType="touchUpInside" id="uGQ-1k-VoM"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="0XO-PD-ldr" firstAttribute="top" secondItem="nZC-2l-cqg" secondAttribute="bottom" constant="20" id="1cF-AQ-rVp"/>
                                             <constraint firstAttribute="trailing" secondItem="u3a-MA-BHH" secondAttribute="trailing" constant="20" id="3OQ-Oy-NPG"/>
                                             <constraint firstItem="nZC-2l-cqg" firstAttribute="leading" secondItem="4uN-1e-AqU" secondAttribute="leading" constant="20" id="3Pu-TQ-pr9"/>
                                             <constraint firstAttribute="bottom" secondItem="zqZ-Us-wKo" secondAttribute="bottom" constant="8" id="40h-aL-Pb8"/>
@@ -1138,6 +1155,7 @@
                                             <constraint firstItem="Wxb-Fj-jKn" firstAttribute="leading" secondItem="4uN-1e-AqU" secondAttribute="leading" constant="20" id="Jin-TP-dK7"/>
                                             <constraint firstItem="1QZ-Mp-b3s" firstAttribute="top" secondItem="ZCh-vp-7VG" secondAttribute="bottom" id="MhF-eX-8II"/>
                                             <constraint firstItem="kGX-50-USQ" firstAttribute="leading" secondItem="4uN-1e-AqU" secondAttribute="leading" constant="20" id="Vpy-6h-irR"/>
+                                            <constraint firstItem="0XO-PD-ldr" firstAttribute="top" secondItem="nZC-2l-cqg" secondAttribute="bottom" constant="20" id="Yke-K9-Clo"/>
                                             <constraint firstAttribute="trailing" secondItem="kGX-50-USQ" secondAttribute="trailing" constant="20" id="bqg-UH-bKj"/>
                                             <constraint firstItem="zqZ-Us-wKo" firstAttribute="top" secondItem="0XO-PD-ldr" secondAttribute="bottom" constant="8" id="coT-7d-qBD"/>
                                             <constraint firstItem="ZCh-vp-7VG" firstAttribute="leading" secondItem="4uN-1e-AqU" secondAttribute="leading" constant="20" id="cpm-xX-tBy"/>
@@ -1156,7 +1174,6 @@
                                             <constraint firstItem="u3a-MA-BHH" firstAttribute="leading" secondItem="zqZ-Us-wKo" secondAttribute="trailing" constant="20" id="q4M-hH-YZK"/>
                                             <constraint firstItem="u3a-MA-BHH" firstAttribute="width" secondItem="zqZ-Us-wKo" secondAttribute="width" id="t2n-uR-eOV"/>
                                             <constraint firstItem="dwH-qN-LLj" firstAttribute="top" secondItem="sHb-qn-05p" secondAttribute="bottom" constant="8" id="tQm-Sc-caP"/>
-                                            <constraint firstAttribute="height" constant="600" id="tc7-CN-naz"/>
                                             <constraint firstItem="sHb-qn-05p" firstAttribute="top" secondItem="Wxb-Fj-jKn" secondAttribute="bottom" id="u4E-bv-NG2"/>
                                         </constraints>
                                     </view>
@@ -1219,8 +1236,8 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" alpha="0.64999997615814209" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5mm-zi-geP">
-                                                    <rect key="frame" x="227" y="40" width="147" height="120"/>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5mm-zi-geP">
+                                                    <rect key="frame" x="227" y="47" width="147" height="120"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="120" id="O0D-9r-Vi2"/>
                                                         <constraint firstAttribute="width" constant="147" id="TKn-cl-5oC"/>
@@ -1228,8 +1245,8 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="safarLogo" translatesAutoresizingMaskIntoConstraints="NO" id="zY5-pt-bWP">
-                                                    <rect key="frame" x="236" y="50" width="128" height="100"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="safarLogo" translatesAutoresizingMaskIntoConstraints="NO" id="zY5-pt-bWP">
+                                                    <rect key="frame" x="236" y="57.5" width="128" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="100" id="Gev-0a-NPd"/>
                                                         <constraint firstAttribute="width" constant="128" id="NL6-TV-bYz"/>
@@ -1360,16 +1377,17 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QxY-lo-aSu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3149" y="1238"/>
+            <point key="canvasLocation" x="2657" y="310"/>
         </scene>
     </scenes>
     <resources>
         <image name="createOrder" width="32" height="32"/>
+        <image name="noPhoto" width="198" height="111"/>
         <image name="ordersList" width="32" height="32"/>
         <image name="safarLogo" width="335" height="274"/>
         <image name="settings" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cy9-Mp-m2w"/>
+        <segue reference="w5m-tB-04g"/>
     </inferredMetricsTieBreakers>
 </document>

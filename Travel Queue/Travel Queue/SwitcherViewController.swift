@@ -47,7 +47,7 @@ class SwitcherViewController: UIViewController {
         case true :
             UIView.transitionWithView(view,
                 duration: 0.5,
-                options: UIViewAnimationOptions.TransitionCrossDissolve,
+                options: UIViewAnimationOptions.TransitionCurlDown,
                 animations: {
                     self.view.bringSubviewToFront(self.passengerContainer)
                 },
@@ -58,7 +58,7 @@ class SwitcherViewController: UIViewController {
         case false:
             UIView.transitionWithView(view,
                 duration: 0.5,
-                options: UIViewAnimationOptions.TransitionCrossDissolve,
+                options: UIViewAnimationOptions.TransitionCurlUp,
                 animations: {
                     self.view.bringSubviewToFront(self.driverContainer)
                 },

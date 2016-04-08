@@ -31,8 +31,23 @@ class AccountViewController: UIViewController {
         
         let closeBarButton = UIBarButtonItem()
         closeBarButton.customView = closeButon
-        closeButon.setTitleColor(UIColor.blueColor(), forState: .Normal)
         self.navigationItem.leftBarButtonItem = closeBarButton
+        
+        self.navigationController?.navigationBar.barTintColor = Utilities.getUIColorFromHex(0x007AFF)
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
     
     func dismissSelf() {

@@ -87,7 +87,7 @@ class ActivationViewController: UIViewController {
             break
         case WRONG_CODE_ENTERED:
             let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if user entered wrong code"),
-                message: NSLocalizedString("User exists", comment: "Alert text if user entered wrong code"))
+                message: NSLocalizedString("Wrong code entered", comment: "Alert text if user entered wrong code"))
             presentViewController(alert, animated: true, completion: nil)
             break
         default:

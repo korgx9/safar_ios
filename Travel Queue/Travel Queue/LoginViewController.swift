@@ -188,9 +188,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 message: NSLocalizedString("Wrong user or password", comment: "Alert text if wrong password or username on login"))
             presentViewController(alert, animated: true, completion: nil)
             break
-        case -3..<(-Int.max):
-            //ACTIVATE
-
+        case (-Int.max) ... -3:
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let activationViewController = storyboard.instantiateViewControllerWithIdentifier("ActivationViewController") as! ActivationViewController
+            activationViewController.username = codeField.text! + loginField.text!
+            self.navigationController!.pushViewController(activationViewController, animated: true)
             break
         default:
             print("recieved smth else then known statuses")
@@ -198,6 +200,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             break
         }
     }
+    //2149
     @IBAction func callToCallCenter(sender: AnyObject) {
         self.presentViewController(utilities.callToCallcenter(), animated: true, completion: nil)
     }

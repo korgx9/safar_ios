@@ -41,6 +41,9 @@ class DriverInfoViewController: UIViewController {
         let myCustomBackButtonItem:UIBarButtonItem = UIBarButtonItem(customView: myBackButton)
         self.navigationItem.leftBarButtonItem  = myCustomBackButtonItem
         
+        self.navigationController?.navigationBar.barTintColor = Utilities.getUIColorFromHex(0x007AFF)
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         vehicleImage.clipsToBounds = false
         vehicleImage.layer.masksToBounds = true
     }

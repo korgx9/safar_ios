@@ -51,4 +51,13 @@ struct Variables {
             static let Background = Utilities.getUIColorFromHex(0xE7E7E7)
         }
     }
+    
+    struct Status {
+        struct Error {
+            static let NoInternet = -1004
+            static let NoInternet1 = -1009
+            static let ConnectionLost = -1005
+            static let BadRequest = -6003
+        }
+    }
 }

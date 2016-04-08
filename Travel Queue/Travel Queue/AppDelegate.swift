@@ -23,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set status bar light
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        //Push notification settings
+        let settings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes:[.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         //Navigation bar colors
 //        UINavigationBar.appearance().titleTextAttributes =
 //            [NSForegroundColorAttributeName : Variables.Colors.NavigationBar.Text]
@@ -73,6 +78,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+//        send this device token to server
+        print("Got token data! \(deviceToken)")
+        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
 
+        let deviceTokenString: String = ( deviceToken.description as NSString )
+            .stringByTrimmingCharactersInSet( characterSet )
+            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+
+        print(deviceTokenString)
+        
+        apiRequester.deviceToken = deviceTokenString
+    }
 }
 

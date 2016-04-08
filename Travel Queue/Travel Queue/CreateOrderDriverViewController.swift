@@ -106,6 +106,9 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
             customPickerView!.delegate = self
             customPickerView!.dataSource = self
             textField.inputView = customPickerView
+            let customToolBar = utilities.getToolBar()
+            customToolBar.targetForAction(Selector("donePicker"), withSender: self)
+            textField.inputAccessoryView = customToolBar
         }
         else if textField == dateOfDepartureField {
             let datePickerView = UIDatePicker()
@@ -114,12 +117,11 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
             let twoDaysFromNow = NSDate(timeIntervalSinceNow: oneDay * 2)
             datePickerView.minimumDate = twoDaysFromNow
             textField.inputView = datePickerView
-            datePickerView.addTarget(self, action: Selector("datePickerAction:"), forControlEvents: UIControlEvents.ValueChanged)
+            datePickerView.addTarget(self, action: #selector(CreateOrderDriverViewController.datePickerAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+            let customToolBar = utilities.getToolBar()
+            customToolBar.targetForAction(Selector("donePicker"), withSender: self)
+            textField.inputAccessoryView = customToolBar
         }
-        
-        let customToolBar = utilities.getToolBar()
-        customToolBar.targetForAction("donePicker", withSender: self)
-        textField.inputAccessoryView = customToolBar
         
         return true
     }
@@ -134,11 +136,11 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return apiRequester.cities![row].name
+        return NSLocalizedString(apiRequester.cities![row].name, comment: "")
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        activeTextField.text = apiRequester.cities![row].name
+        activeTextField.text = NSLocalizedString(apiRequester.cities![row].name, comment: "")
     }
     
     func datePickerAction(sender: UIDatePicker) {
@@ -174,7 +176,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     func onDriverPostedOrder(notification: NSNotification) {
         var title = ""
         var message = ""
-        
+        hideProgressHud()
         let operationValue = notification.object!.integerValue
         switch (operationValue) {
         case OPERATION_FAILED:
@@ -362,8 +364,8 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderDriverViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderDriverViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -387,6 +389,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func makeTrip() {
+        utilities.showProgressHud(NSLocalizedString("Request", comment: "HUD on creating passenger order"), forView: self.view)
         self.apiRequester.postOrderAsDriver(apiRequester.user!.id!,
             source: self.fromCity,
             destination: self.toCity,

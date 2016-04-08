@@ -180,7 +180,7 @@
 "nZC-2l-cqg.placeholder" = "N/A";
 
 /* Class = "UILabel"; text = "Passengers count:"; ObjectID = "oXi-9M-yaG"; */
-"oXi-9M-yaG.text" = "Количеаство пассажиров:";
+"oXi-9M-yaG.text" = "Количество пассажиров:";
 
 /* Class = "UITextField"; placeholder = "Phone number"; ObjectID = "pWa-XR-y4w"; */
 "pWa-XR-y4w.placeholder" = "Номер телефона";
@@ -198,7 +198,7 @@
 "twk-5B-Cfr.text" = "До:";
 
 /* Class = "UIButton"; normalTitle = "Decline Driver"; ObjectID = "u3a-MA-BHH"; */
-"u3a-MA-BHH.normalTitle" = "Отколнить водителя";
+"u3a-MA-BHH.normalTitle" = "Отклонить";
 
 /* Class = "UIViewController"; title = "Sign Up"; ObjectID = "uZa-2z-IDI"; */
 "uZa-2z-IDI.title" = "Регистрация";
@@ -219,7 +219,7 @@
 "yO8-Nc-xlj.text" = "+990000000";
 
 /* Class = "UIButton"; normalTitle = "Accept Driver"; ObjectID = "zqZ-Us-wKo"; */
-"zqZ-Us-wKo.normalTitle" = "Принять водителя";
+"zqZ-Us-wKo.normalTitle" = "Принять";
 
 /**/
 "lNz-vy-HAc.text" = "Позвонить оператору";

@@ -94,7 +94,7 @@ class RegisterViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == activationSegueIdentifier) {
             let secondViewController = segue.destinationViewController as! ActivationViewController
-            secondViewController.username = phoneField.text!
+            secondViewController.username = codeField.text! + phoneField.text!
         }
     }
     

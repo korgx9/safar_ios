@@ -9,8 +9,14 @@
 import UIKit
 import JGProgressHUD
 
+let progressHud = JGProgressHUD()
+
+func hideProgressHud () {
+    progressHud.dismissAnimated(true)
+}
+
 class Utilities: NSObject {
-    private let progressHud = JGProgressHUD()
+    
 
     static func showOKAlert(title: String?, message: String?) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

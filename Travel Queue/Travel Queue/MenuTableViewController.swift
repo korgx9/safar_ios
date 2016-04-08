@@ -26,10 +26,19 @@ class MenuTableViewController: UITableViewController {
         
 //        utilities.setBackgroundImage(tableView)
         utilities.setBackgroundImage(view)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
 
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = .Default
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         

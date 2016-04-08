@@ -97,7 +97,7 @@ class DriverQueuesTableViewController: UITableViewController {
         //Configure the cell...
         cell.passengersCountLabel.text = NSLocalizedString("Passengers Left", comment: "Passegners count on client queues cell") + ": " + queues![indexPath.row].remainedSeats.description
         cell.dateLabel.text = NSLocalizedString("Date", comment: "Travel date on client queue cell") + ": " + queues![indexPath.row].duedate
-        cell.directionLabel.text = "\(queues![indexPath.row].source) - \(queues![indexPath.row].destination)"
+        cell.directionLabel.text = "\(NSLocalizedString(queues![indexPath.row].source, comment: "")) - \(NSLocalizedString(queues![indexPath.row].destination, comment: ""))"
         //        cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
         
         switch queues![indexPath.row].status {
@@ -152,7 +152,8 @@ class DriverQueuesTableViewController: UITableViewController {
             else {
 //                alert.addAction(editAction)
             }
-            alert.addAction(cancelOrderAction)
+            
+                alert.addAction(cancelOrderAction)
             alert.addAction(cancelAction)
             
             if queue.status != ORDER_CANCELLED {
