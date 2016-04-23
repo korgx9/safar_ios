@@ -93,13 +93,13 @@ class DriverInfoViewController: UIViewController {
     }
     
     func onDriverConfirmed(notification: NSNotification) {
-        print(notification)
+        print(notification, terminator: "")
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func onDriverRejected(notification: NSNotification) {
-        print(notification)
+        print(notification, terminator: "")
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

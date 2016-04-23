@@ -176,7 +176,7 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func onUserCancelledOrder(notification: NSNotification) {
-        print(notification)
+        print(notification, terminator: "")
     }
     
     func donePicker(sender: AnyObject) {

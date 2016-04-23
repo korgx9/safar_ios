@@ -120,7 +120,7 @@ class APIRequester {
     }
     
     func sendDeviceToken(phone: String) {
-        print(DeviceTokenURL + phone + "/" + deviceToken!)
+        print(DeviceTokenURL + phone + "/" + deviceToken!, terminator: "")
         Alamofire.request(.POST, DeviceTokenURL + phone + "/" + deviceToken! , parameters: nil, encoding: .JSON).validate().responseJSON {
             response in
             switch response.result {
@@ -262,7 +262,7 @@ class APIRequester {
     }
     
     func confirmDriver(cqid: Int, dqid: Int) {
-        print(TripConfirm + cqid.description + "/" + dqid.description)
+        print(TripConfirm + cqid.description + "/" + dqid.description, terminator: "")
         Alamofire.request(.PUT, TripConfirm + cqid.description + "/" + dqid.description).validate().responseJSON {
             response in
             switch response.result {
@@ -381,7 +381,7 @@ class APIRequester {
     }
     
     func cancelClientQueue(queueId: Int) {
-        print(CancelCQueue + queueId.description)
+        print(CancelCQueue + queueId.description, terminator: "")
         Alamofire.request(.PUT, CancelCQueue + queueId.description).validate().responseJSON {
             response in
             switch response.result {
@@ -400,7 +400,7 @@ class APIRequester {
     
     func NoInternetCheck(error: AnyObject) {
         utilities.hideProgressHud()
-        print(error.code)
+        print(error.code, terminator: "")
         if error.code == Variables.Status.Error.NoInternet || error.code == Variables.Status.Error.NoInternet1  {
             let alert = UIAlertView(title: NSLocalizedString("Внимание", comment: "Warning"), message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK")
             alert.show()

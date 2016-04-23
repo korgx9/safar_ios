@@ -102,7 +102,7 @@ class RegisterViewController: UIViewController {
         utilities.hideProgressHud()
         switch notification.object!.integerValue {
         case OPERATION_SUCCESS..<Int.max:
-            print("received \(notification.object?.integerValue)")
+            print("received \(notification.object?.integerValue)", terminator: "")
             performSegueWithIdentifier(activationSegueIdentifier, sender: self)
             break
         case USER_ALREADY_EXISTS:
@@ -116,8 +116,8 @@ class RegisterViewController: UIViewController {
             presentViewController(alert, animated: true, completion: nil)
             break
         default:
-            print("recieved smth else then known statuses")
-            print(notification.object?.integerValue)
+            print("recieved smth else then known statuses", terminator: "")
+            print(notification.object?.integerValue, terminator: "")
             break
         }
     }

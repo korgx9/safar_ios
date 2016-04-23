@@ -195,8 +195,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.navigationController!.pushViewController(activationViewController, animated: true)
             break
         default:
-            print("recieved smth else then known statuses")
-            print(notification.object?.integerValue)
+            print("recieved smth else then known statuses", terminator: "")
+            print(notification.object?.integerValue, terminator: "")
             break
         }
     }

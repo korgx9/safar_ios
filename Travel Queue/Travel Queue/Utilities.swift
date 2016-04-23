@@ -207,7 +207,7 @@ class Utilities: NSObject {
             title: NSLocalizedString("Done", comment: "Кнопка выбрать над PickerView"),
             style: UIBarButtonItemStyle.Plain,
             target: nil,
-            action: "donePicker:")
+            action: Selector("donePicker:"))
 //        doneButton.tintColor = Constants.Color.PickerView.Tint
         
         let spaceButton = UIBarButtonItem(
@@ -227,7 +227,7 @@ class Utilities: NSObject {
         alert.message = NSLocalizedString("Call to call-center", comment: "ALert description when driver wants to call to passenger")
         
         let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: "Action sheet on client queues button about driver"),
-                                      style: .Default, handler: {(alert: UIAlertAction!) in
+                                      style: .Default, handler: {(alert: UIAlertAction) in
                                         Utilities.callToNumber("+992987778866")
         })
         

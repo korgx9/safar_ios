@@ -81,14 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
 //        send this device token to server
-        print("Got token data! \(deviceToken)")
+        print("Got token data! \(deviceToken)", terminator: "")
         let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
 
         let deviceTokenString: String = ( deviceToken.description as NSString )
             .stringByTrimmingCharactersInSet( characterSet )
             .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
 
-        print(deviceTokenString)
+        print(deviceTokenString, terminator: "")
         
         apiRequester.deviceToken = deviceTokenString
     }

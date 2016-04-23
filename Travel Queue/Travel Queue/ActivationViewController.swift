@@ -91,8 +91,8 @@ class ActivationViewController: UIViewController {
             presentViewController(alert, animated: true, completion: nil)
             break
         default:
-            print("recieved smth else then known statuses")
-            print(notification.object?.integerValue)
+            print("recieved smth else then known statuses", terminator: "")
+            print(notification.object?.integerValue, terminator: "")
             break
         }
     }

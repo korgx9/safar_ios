@@ -65,7 +65,7 @@ class DriverClientsTableViewController: UITableViewController {
     }
     
     func onDriverClientsLoaded(notification: NSNotification) {
-        print(notification)
+        print(notification, terminator: "")
         
         if let driverClients = notification.object as? [DriverClient] {
             self.driverClients = driverClients
@@ -110,7 +110,7 @@ class DriverClientsTableViewController: UITableViewController {
             + ": " + driverClients[indexPath.row].fullName + "?"
         
         let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: "Action sheet on client queues button about driver"),
-            style: .Default, handler: {(alert: UIAlertAction!) in
+            style: .Default, handler: {(alert: UIAlertAction) in
           Utilities.callToNumber(self.driverClients[indexPath.row].phoneNo)
         })
         

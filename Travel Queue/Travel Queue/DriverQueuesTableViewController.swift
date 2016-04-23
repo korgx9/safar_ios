@@ -125,7 +125,7 @@ class DriverQueuesTableViewController: UITableViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             
             let showPassengersAction = UIAlertAction(title: NSLocalizedString("Show passengers", comment: "Action sheet on client queues button about driver"),
-                style: .Default, handler: {(alert: UIAlertAction!) in
+                style: .Default, handler: {(alert: UIAlertAction) in
                     
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let driverDetailsViewController = storyboard.instantiateViewControllerWithIdentifier("DriverClients") as! DriverClientsTableViewController

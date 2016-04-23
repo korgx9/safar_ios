@@ -200,8 +200,8 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
             message = NSLocalizedString("Please, choose a date after today", comment: "Alert message if driver chossed wrong date")
             break
         default:
-            print("recieved smth else then known statuses")
-            print(notification.object?.integerValue)
+            print("recieved smth else then known statuses", terminator: "")
+            print(notification.object?.integerValue, terminator: "")
             break
         }
     
@@ -210,7 +210,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     func onDriverCancelledOrder(notification: NSNotification) {
-        print(notification.object as! Int)
+        print(notification.object as! Int, terminator: "")
     }
     
     //MARK: Upload image methods
@@ -295,7 +295,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
                 if stringType == kUTTypeMovie as NSString {
                     let urlOfVideo = info[UIImagePickerControllerMediaURL] as? NSURL
                     if let url = urlOfVideo {
-                        print("Video URL = \(url)")
+                        print("Video URL = \(url)", terminator: "")
                     }
                 }
                 else if stringType == kUTTypeImage as NSString {
@@ -322,7 +322,7 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
                 self.presentViewController(theController, animated: true, completion: nil)
             }
             else {
-                print("Camera is not available")
+                print("Camera is not available", terminator: "")
             }
         }
     }

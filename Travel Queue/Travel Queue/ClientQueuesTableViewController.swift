@@ -123,7 +123,7 @@ class ClientQueuesTableViewController: UITableViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             
             let aboutDriverAction = UIAlertAction(title: NSLocalizedString("About Driver", comment: "Action sheet on client queues button about driver"),
-                style: .Default, handler: {(alert: UIAlertAction!) in
+                style: .Default, handler: {(alert: UIAlertAction) in
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let driverDetailsViewController = storyboard.instantiateViewControllerWithIdentifier("DriverInfo") as! DriverInfoViewController
                     driverDetailsViewController.queue = queue
