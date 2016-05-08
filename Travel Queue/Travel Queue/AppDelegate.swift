@@ -20,6 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Loading One Time data from server
         apiRequester.getCities()
         
+        //If user already registered and logged in then LoginUser
+        let codeFieldKey = "codeField"
+        let phoneFieldKey = "phoneField"
+        let passwordFieldKey = "passField"
+        
+        if let codeSaved = NSUserDefaults.standardUserDefaults().stringForKey(codeFieldKey) {
+            if let loginSaved = NSUserDefaults.standardUserDefaults().stringForKey(phoneFieldKey) {
+                if let password = NSUserDefaults.standardUserDefaults().stringForKey(passwordFieldKey) {
+                    if codeSaved != "" && loginSaved != "" && password != "" {
+                        apiRequester.login(codeSaved + loginSaved, password: password)
+                    }
+                }
+            }
+        }
         // Set status bar light
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
