@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         loginButton.layer.cornerRadius = 5.0
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         codeField.alpha = 0
@@ -77,7 +77,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserLoggedIn:",
+            selector: #selector(LoginViewController.onUserLoggedIn(_:)),
             name: Variables.Notifications.Login,
             object: nil)
     }

@@ -9,27 +9,24 @@
 
 import UIKit
 
-class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ClientSearchForVehicleViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet weak var fromCityTextField: UITextField!
     @IBOutlet weak var toCityTextField: UITextField!
     @IBOutlet weak var dateOfDepartureField: UITextField!
     @IBOutlet weak var countOfPassengersStepper: UIStepper!
     @IBOutlet weak var passengersCountField: UITextField!
-    
-    @IBOutlet weak var pickupFromHomeSwitcher: UISwitch!
+    @IBOutlet weak var backgroundLabel: UILabel!
     @IBOutlet weak var placeOrderButton: UIButton!
-    @IBOutlet weak var cancelOrderButton: UIButton!
-    
-    @IBOutlet weak var pickupSwitchLabel: UILabel!
-    @IBOutlet weak var pickupAddressLabel: UILabel!
-    @IBOutlet weak var pickupAddressField: UITextField!
 
     private let apiRequester = APIRequester.sharedInstance
+    private let segueIdentifierDriversList = "OnSearchResultSegue"
+    
     private var activeTextField = UITextField()
     private let utilities = Utilities()
     private var customPickerView: UIPickerView?
     private var fromCity = ""
     private var toCity = ""
+    
     var isUserEditing = false
     
     override func viewDidLoad() {
@@ -39,16 +36,13 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
         fromCityTextField.delegate = self
         toCityTextField.delegate = self
         dateOfDepartureField.delegate = self
-        pickupAddressField.delegate = self
         
         placeOrderButton.layer.cornerRadius = 3.0
+        backgroundLabel.layer.cornerRadius = 5.0
+        backgroundLabel.layer.masksToBounds = true
         
         passengersCountField.text = "1"
-        pickupAddressLabel.hidden = true
-        pickupAddressField.hidden = true
-        
         placeOrderButton.hidden = isUserEditing
-        cancelOrderButton.hidden = !isUserEditing
         
         let textColor = UIColor.darkGrayColor()
         fromCityTextField.textColor = textColor
@@ -57,26 +51,25 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
         passengersCountField.textColor = textColor
         
         registerForKeyboardNotifications()
-        pickupElementsVisibility(true)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserPostedOrder:",
+            selector: #selector(ClientSearchForVehicleViewController.onUserPostedOrder(_:)),
             name: Variables.Notifications.PostOrderClient,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserCancelledOrder:",
-            name: Variables.Notifications.ClientQueueCancelled,
+            selector: #selector(ClientSearchForVehicleViewController.onSearchDataReceived(_:)),
+            name: Variables.Notifications.SearchDataReceived,
             object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.PostOrderClient)
-        NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.ClientQueueCancelled)
+        NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.SearchDataReceived)
     }
     
     override func didReceiveMemoryWarning() {
@@ -88,10 +81,6 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
         passengersCountField.text = Int(sender.value).description
     }
     
-    @IBAction func pickupAddressSwitcher(sender: UISwitch) {
-        pickupAddressLabel.hidden = !sender.on
-        pickupAddressField.hidden = !sender.on
-    }
     //MARK: Textfield delegates
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
@@ -105,15 +94,15 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
             let datePickerView = UIDatePicker()
             datePickerView.datePickerMode = UIDatePickerMode.Date
             
-            let oneDay: NSTimeInterval = 60 * 60 * 24;
-            let twoDaysFromNow = NSDate(timeIntervalSinceNow: oneDay * 2)
-            datePickerView.minimumDate = twoDaysFromNow
+//            let oneDay: NSTimeInterval = 60 * 60 * 24;
+//            let twoDaysFromNow = NSDate(timeIntervalSinceNow: oneDay * 2)
+            datePickerView.minimumDate = NSDate()
             textField.inputView = datePickerView
-            datePickerView.addTarget(self, action: Selector("datePickerAction:"), forControlEvents: UIControlEvents.ValueChanged)
+            datePickerView.addTarget(self, action: #selector(ClientSearchForVehicleViewController.datePickerAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         }
         
         let customToolBar = utilities.getToolBar()
-        customToolBar.targetForAction("donePicker:", withSender: self)
+        customToolBar.targetForAction(#selector(ClientSearchForVehicleViewController.donePicker(_:)), withSender: self)
         textField.inputAccessoryView = customToolBar
     }
 
@@ -132,7 +121,6 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         activeTextField.text = NSLocalizedString(apiRequester.cities![row].name, comment: "")
-        isSourceCityIsDushanbe()
     }
     
     func datePickerAction(sender: UIDatePicker) {
@@ -145,16 +133,12 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     @IBAction func placeOrderButtonTapped(sender: UIButton) {
         
         if fromCityTextField.text == "" ||
-        toCityTextField.text == "" || dateOfDepartureField.text == "" ||
-            (pickupAddressField.hidden == false && pickupAddressField.text == "") {
+        toCityTextField.text == "" || dateOfDepartureField.text == "" {
                 let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if error happened"),
                     message: NSLocalizedString("Please, fill all required fields", comment: "Alert text if user didn't filled all data when creates order"))
                 self.presentViewController(alert, animated: true, completion: nil)
         }
         else if checkSameCity() {
-            
-        }
-        else if checkRareRoute(true) {
             
         }
         else {
@@ -175,10 +159,6 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
         refreshOrderForm()
     }
     
-    func onUserCancelledOrder(notification: NSNotification) {
-        print(notification, terminator: "")
-    }
-    
     func donePicker(sender: AnyObject) {
         view.endEditing(true);
         
@@ -187,15 +167,12 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
             case fromCityTextField:
                 fromCity = apiRequester.cities![selectedRow].name
                 fromCityTextField.text = NSLocalizedString(apiRequester.cities![selectedRow].name, comment: "City name in textField")
-                    isSourceCityIsDushanbe()
                 checkSameCity()
-                checkRareRoute(false)
                 break
             case toCityTextField:
                 toCity = apiRequester.cities![selectedRow].name
                 toCityTextField.text = NSLocalizedString(apiRequester.cities![selectedRow].name, comment: "City name in textField")
                 checkSameCity()
-                checkRareRoute(false)
                 break
             case dateOfDepartureField:
                 datePickerAction(activeTextField.inputView as! UIDatePicker)
@@ -214,8 +191,8 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     }
     
     func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderPassengerViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CreateOrderPassengerViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ClientSearchForVehicleViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ClientSearchForVehicleViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -240,24 +217,21 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
     
     func makeTrip() {
         utilities.showProgressHud(NSLocalizedString("Request", comment: "HUD on creating passenger order"), forView: self.view)
-        self.apiRequester.postOrderAsClient(self.apiRequester.user!.id!,
-            source: self.fromCity,
+        self.apiRequester.getVehiclesBy(
+            self.fromCity,
             destination: self.toCity,
-            passCount: self.passengersCountField.text!,
             duedate: self.dateOfDepartureField.text!,
-            pickup: (self.pickupFromHomeSwitcher.on == true ? 1 : 0),
-            address: self.pickupAddressField.text!
+            passCount: self.passengersCountField.text!
         )
     }
     
     func checkSameCity() -> Bool {
         if toCity == fromCity {
             let alert = Utilities.showOKAlert(NSLocalizedString("Error", comment: "Alert title if error happened"),
-                message: NSLocalizedString("Departure address and Destination address should not be the same", comment: "Alert text if user chosed the same cities"))
+                message: NSLocalizedString("Departure address and Destination address should not be the same", comment: "Alert text if user choose the same cities"))
             self.presentViewController(alert, animated: true, completion: nil)
             if self.activeTextField == self.toCityTextField {
                 self.toCity = ""
-                isSourceCityIsDushanbe()
             }
             else {
                 self.fromCity = ""
@@ -288,12 +262,10 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
                     self.toCityTextField.text = nil
                     self.fromCity = ""
                     self.toCity = ""
-                    self.isSourceCityIsDushanbe()
                 }
                 else {
                     if self.activeTextField == self.toCityTextField {
                         self.toCity = ""
-                        self.isSourceCityIsDushanbe()
                     }
                     else {
                         self.fromCity = ""
@@ -312,20 +284,24 @@ class CreateOrderPassengerViewController: UIViewController, UITextFieldDelegate,
         return false
     }
     
-    func pickupElementsVisibility(visibility: Bool) {
-        pickupFromHomeSwitcher.hidden = visibility
-        pickupSwitchLabel.hidden = visibility
+    func onSearchDataReceived(notification: NSNotification) {
+        hideProgressHud()
+        let driversList = notification.object as! [DriverQueue]
         
-        pickupAddressLabel.hidden = !pickupFromHomeSwitcher.on
-        pickupAddressField.hidden = !pickupFromHomeSwitcher.on
-    }
-    
-    func isSourceCityIsDushanbe() {
-        if fromCity == "Душанбе" {
-            pickupElementsVisibility(false)
+        if driversList.count > 0 {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("DriversListTableViewController") as! DriversListTableViewController
+            vc.driverQueueList = driversList
+            vc.bookedSeatsCount = Int(passengersCountField.text!)!
+            let navController = UINavigationController(rootViewController: vc)
+            self.presentViewController(navController, animated: true, completion: nil)
         }
-        else{
-            pickupElementsVisibility(true)
+        else {
+            let alert = UIAlertController(title: NSLocalizedString("Warning", comment: "Alert title when no result on search"), message: NSLocalizedString("There is no vehicle yet", comment: "Zero search result"), preferredStyle: .Alert)
+            
+            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "ALert ok button if search result 0"), style: .Default, handler: nil)
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

@@ -125,9 +125,6 @@
 /* Class = "UILabel"; text = "Please enter code into the textfield"; ObjectID = "bUC-xd-Xiu"; */
 "bUC-xd-Xiu.text" = "Пожалуйста, введите код";
 
-/* Class = "UIButton"; normalTitle = "CANCEL ORDER"; ObjectID = "bqw-Uk-nca"; */
-"bqw-Uk-nca.normalTitle" = "Отменить поездку";
-
 /* Class = "UITextField"; placeholder = "Enter approx time"; ObjectID = "cLo-W0-XSC"; */
 "cLo-W0-XSC.placeholder" = "Введите время";
 
@@ -156,7 +153,7 @@
 "grr-kD-ldn.text" = "Поделиться";
 
 /* Class = "UIButton"; normalTitle = "SEND REQUEST"; ObjectID = "hRT-Q7-L50"; */
-"hRT-Q7-L50.normalTitle" = "Создать поездку";
+"hRT-Q7-L50.normalTitle" = "Поиск машины";
 
 /* Class = "UILabel"; text = "From:"; ObjectID = "jot-F3-TVV"; */
 "jot-F3-TVV.text" = "От:";
@@ -226,3 +223,6 @@
 
 /**/
 "Ac8-ze-7er.normalTitle" = "Позвонить оператору";
+
+/**/
+"9sz-lS-YwR.text" = "Выберите направление";

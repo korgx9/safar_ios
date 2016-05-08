@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DriverQueuesTableViewController: UITableViewController {
+class DriverQueuesTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
 
     private var apiRequester = APIRequester.sharedInstance
     private var queues: [DriverQueue]?
@@ -36,7 +36,7 @@ class DriverQueuesTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let tap = UITapGestureRecognizer(target: self, action:Selector("dismissKeyboard"))
+        let tap = UITapGestureRecognizer(target: self, action:#selector(DriverQueuesTableViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         tap.cancelsTouchesInView = false
     }
@@ -49,12 +49,12 @@ class DriverQueuesTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.UserQueuesAsClientLoaded)
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.DriverQueueCancelled)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserQueuesAsDriverLoaded:",
+            selector: #selector(DriverQueuesTableViewController.onUserQueuesAsDriverLoaded(_:)),
             name: Variables.Notifications.UserQueuesAsDriverLoaded,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverCancelledOrder:",
+            selector: #selector(DriverQueuesTableViewController.onDriverCancelledOrder(_:)),
             name: Variables.Notifications.DriverQueueCancelled,
             object: nil)
         
@@ -120,6 +120,12 @@ class DriverQueuesTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Popub View Delegates
+    func adaptivePresentationStyleForPresentationController(
+        controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let queue = queues?[indexPath.row] {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -134,8 +140,19 @@ class DriverQueuesTableViewController: UITableViewController {
                     self.presentViewController(clientsNavCon, animated: true, completion: nil)
             })
             
-//            let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"),
-//                style: .Default, handler: nil)
+            let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"), style: .Default, handler: {Void in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let menuViewController = storyboard.instantiateViewControllerWithIdentifier("EditDriverQueueViewController") as! EditDriverQueueViewController
+                menuViewController.modalPresentationStyle = .Popover
+                let popoverMenuViewController = menuViewController.popoverPresentationController
+                popoverMenuViewController?.permittedArrowDirections = .Any
+                popoverMenuViewController?.delegate = self
+                popoverMenuViewController?.sourceView = super.view
+                popoverMenuViewController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+
+                self.presentViewController(menuViewController, animated: true, completion: nil)
+                
+            })
             
             let cancelOrderAction = UIAlertAction(title: NSLocalizedString("Cancel Order", comment: "Action sheet on client queues button edit"),
                 style: .Default, handler: { Void in
@@ -149,14 +166,13 @@ class DriverQueuesTableViewController: UITableViewController {
             if queues![indexPath.row].status != ORDER_NEW {
                 alert.addAction(showPassengersAction)
             }
-            else {
-//                alert.addAction(editAction)
-            }
+
             
-                alert.addAction(cancelOrderAction)
+            alert.addAction(cancelOrderAction)
             alert.addAction(cancelAction)
             
-            if queue.status != ORDER_CANCELLED {
+            if queue.status != ORDER_CANCELLED && queue.status != ORDER_COMPLETED {
+                alert.addAction(editAction)
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }

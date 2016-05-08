@@ -25,6 +25,8 @@ struct Variables {
         static let DriverClients            = "DriverClientsNotificationKey"
         static let DriverQueueCancelled     = "DriverQueueCancelledNotificationKey"
         static let ClientQueueCancelled     = "ClientQueueCancelledNotificationKey"
+        static let SearchDataReceived       = "SearchDataReceivedNotifKey"
+        static let BookedSeatInVehicle      = "BookedSeatInVehicleNotifKey"
     }
     
 //    static let cities = ["", "Душанбе", "Хорог", "Куляб", "Ходжент"]

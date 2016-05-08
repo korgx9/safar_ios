@@ -35,7 +35,7 @@ class DriverInfoViewController: UIViewController {
         declineDriverButton.layer.cornerRadius = 3.0
         
         let myBackButton:UIButton = UIButton()
-        myBackButton.addTarget(self, action: "popToRoot:", forControlEvents: UIControlEvents.TouchUpInside)
+        myBackButton.addTarget(self, action: #selector(DriverInfoViewController.popToRoot(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         myBackButton.setTitle(NSLocalizedString("Back", comment: "Navigation back button on about driver view"), forState: UIControlState.Normal)
         myBackButton.sizeToFit()
         let myCustomBackButtonItem:UIBarButtonItem = UIBarButtonItem(customView: myBackButton)
@@ -52,17 +52,17 @@ class DriverInfoViewController: UIViewController {
         super.viewDidAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverInfoLoaded:",
+            selector: #selector(DriverInfoViewController.onDriverInfoLoaded(_:)),
             name: Variables.Notifications.DriverInfo,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverConfirmed:",
+            selector: #selector(DriverInfoViewController.onDriverConfirmed(_:)),
             name: Variables.Notifications.ConfirmDriver,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverRejected:",
+            selector: #selector(DriverInfoViewController.onDriverRejected(_:)),
             name: Variables.Notifications.RejectDriver,
             object: nil)
      
@@ -70,7 +70,7 @@ class DriverInfoViewController: UIViewController {
             apiRequester.getDriverInfoByClientOrderId(queueId)
         }
         
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     
     override func viewDidDisappear(animated: Bool) {

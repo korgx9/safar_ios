@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
         closeButon.frame = CGRectMake(0, 0, 70, 30)
         closeButon.titleLabel!.font =  UIFont(name: "System", size: 15)
         closeButon.setTitle(NSLocalizedString("Close", comment: "Close button on comments view in navigation bar"), forState: .Normal)
-        closeButon.addTarget(self, action: Selector("dismissSelf"), forControlEvents: .TouchUpInside)
+        closeButon.addTarget(self, action: #selector(AccountViewController.dismissSelf), forControlEvents: .TouchUpInside)
         
         let closeBarButton = UIBarButtonItem()
         closeBarButton.customView = closeButon

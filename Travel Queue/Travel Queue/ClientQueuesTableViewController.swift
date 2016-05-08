@@ -11,7 +11,7 @@ import UIKit
 class ClientQueuesTableViewController: UITableViewController {
 
     private var apiRequester = APIRequester.sharedInstance
-    private var queues: [Queue]?
+    private var queues: [ClientBooking]?
     private var clientQueueCellIdentifier = "ClientQueueCellIdentifier"
     private let utilities = Utilities()
     
@@ -36,7 +36,7 @@ class ClientQueuesTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let tap = UITapGestureRecognizer(target: self, action:Selector("dismissKeyboard"))
+        let tap = UITapGestureRecognizer(target: self, action:#selector(ClientQueuesTableViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         tap.cancelsTouchesInView = false
     }
@@ -47,15 +47,15 @@ class ClientQueuesTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.UserQueuesAsClientLoaded)
         NSNotificationCenter.defaultCenter().removeObserver(Variables.Notifications.ClientQueueCancelled)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserQueuesAsClientLoaded:",
+            selector: #selector(ClientQueuesTableViewController.onUserQueuesAsClientLoaded(_:)),
             name: Variables.Notifications.UserQueuesAsClientLoaded,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserCancelledOrder:",
+            selector: #selector(ClientQueuesTableViewController.onUserCancelledOrder(_:)),
             name: Variables.Notifications.ClientQueueCancelled,
             object: nil)
-        apiRequester.getUserQueuesAsClientById(apiRequester.user!.id!)
+        apiRequester.getUserReservations(apiRequester.user!.id!)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -93,28 +93,12 @@ class ClientQueuesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(clientQueueCellIdentifier, forIndexPath: indexPath) as! ClientQueueTableViewCell
 
         //Configure the cell...
-        cell.passengersCountLabel.text = NSLocalizedString("Passengers", comment: "Passegners count on client queues cell") + ": " + queues![indexPath.row].numberofPassengers!.description
-        cell.dateLabel.text = NSLocalizedString("Date", comment: "Travel date on client queue cell") + ": " + queues![indexPath.row].duedate!
-        cell.directionLabel.text = "\(NSLocalizedString(queues![indexPath.row].source!, comment: "")) - \(NSLocalizedString(queues![indexPath.row].destination!, comment: ""))"
-//        cell.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
+        cell.passengersCountLabel.text = NSLocalizedString("Passengers Left", comment: "Passegners count on client queues cell") + ": " + queues![indexPath.row].curDQ!.remainedSeats.description
+        cell.dateLabel.text = NSLocalizedString("Date", comment: "Travel date on client queue cell") + ": " + queues![indexPath.row].curDQ!.duedate
+        cell.directionLabel.text = "\(NSLocalizedString(queues![indexPath.row].curDQ!.source, comment: "")) - \(NSLocalizedString(queues![indexPath.row].curDQ!.destination, comment: ""))"
+        cell.accessoryType = UITableViewCellAccessoryType.None
+        cell.statusImage.sd_setImageWithURL(NSURL(string: "http://safar.tj:8080/getImageforDq/" +  queues![indexPath.row].curDQ!.id.description), placeholderImage: UIImage(named: "noPhoto"), options: .RetryFailed)
         
-        switch queues![indexPath.row].status! {
-        case ORDER_PARTIAL_COMPLETED,
-            ORDER_COMPLETED:
-            cell.statusImage.image = UIImage(named: "statusCompleted")
-            break
-        case ORDER_WAITING_CONFIRMATION:
-            cell.statusImage.image = UIImage(named: "statusForApprove")
-            break
-        case ORDER_NEW:
-            cell.statusImage.image = UIImage(named: "statusWaiting")
-            break
-        case ORDER_CANCELLED:
-            cell.statusImage.image = UIImage(named: "statusCanceled")
-            break
-        default:
-            break
-        }
         return cell
     }
     
@@ -126,18 +110,18 @@ class ClientQueuesTableViewController: UITableViewController {
                 style: .Default, handler: {(alert: UIAlertAction) in
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let driverDetailsViewController = storyboard.instantiateViewControllerWithIdentifier("DriverInfo") as! DriverInfoViewController
-                    driverDetailsViewController.queue = queue
+//                    driverDetailsViewController.queue = queue.curDQ
                     let navigation = UINavigationController(rootViewController: driverDetailsViewController)
                     self.presentViewController(navigation, animated: true, completion: nil)
             })
             
-            let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"),
-                style: .Default, handler: nil)
-            
+//            let editAction = UIAlertAction(title: NSLocalizedString("Edit", comment: "Action sheet on client queues button edit"),
+//                style: .Default, handler: nil)
+            print(queue.reservationId)
             let cancelOrderAction = UIAlertAction(title: NSLocalizedString("Cancel Order", comment: "Action sheet on client queues button edit"),
                 style: .Default, handler: { Void in
                     self.utilities.showProgressHud(NSLocalizedString("Request", comment: "HUD message when canceling user order"), forView: self.view)
-                    self.apiRequester.cancelClientQueue(queue.id)
+                    self.apiRequester.cancelClientReservation(queue.reservationId)
             })
 
             let cancelAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "Action sheet on client queues button dismiss"),
@@ -150,19 +134,19 @@ class ClientQueuesTableViewController: UITableViewController {
             alert.addAction(cancelOrderAction)
             alert.addAction(cancelAction)
             
-            if queue.status != ORDER_CANCELLED {
+            if queue.status != ORDER_CANCELLED || queue.status != ORDER_COMPLETED {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
     }
     
     func onUserQueuesAsClientLoaded(notification: NSNotification) {
-        self.queues = notification.object as? [Queue]
+        self.queues = notification.object as? [ClientBooking]
         tableView.reloadData()
     }
     
     func onUserCancelledOrder(notification: NSNotification) {
         utilities.hideProgressHud()
-        apiRequester.getUserQueuesAsClientById(apiRequester.user!.id!)
+        apiRequester.getUserReservations(apiRequester.user!.id!)
     }
 }

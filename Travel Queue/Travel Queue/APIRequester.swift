@@ -40,6 +40,15 @@ class APIRequester {
     private let DriverVehiclePhotoDownload = BASE_URL + "getImageforDq/"
     
     
+    //BASE URL V2
+    static let BASE_URL_V2 = "http://safar.tj:8080/api/v2/"
+    private let FindVehicleURL = BASE_URL_V2 + "findmatch/"
+    private let BookSeatInVehicleURL = BASE_URL_V2 + "bookplace/"
+    private let GetUserReservationsURL = BASE_URL_V2 + "userbookingmatchess/"
+    private let EditReservationURL = BASE_URL + "editreserve/"//{queue_id}/{newcount}/
+    private let CancelUserReservationsURL = BASE_URL_V2 + "cancelbooking/"//{reservation_id}
+    
+    
     private let notificationCenter = NSNotificationCenter.defaultCenter()
     private let utilities = Utilities()
     
@@ -152,32 +161,6 @@ class APIRequester {
             }
         }
     }
-    
-    func postOrderAsClient(clientid: Int, source: String, destination: String, passCount: String, duedate: String, pickup: Int, address: String) {
-        let params: [String : AnyObject] = [
-            "clientid": clientid,
-            "source": source,
-            "destination": destination,
-            "numberofpassengers": passCount,
-            "duedate": duedate,
-            "pickup": pickup,
-            "address": address
-        ]
-        Alamofire.request(.POST, AddToQueue, parameters: params, encoding: .JSON).validate().responseJSON {
-            response in
-            switch response.result {
-            case .Success:
-                if let responseValue = response.result.value {
-                    self.notificationCenter.postNotificationName(Variables.Notifications.PostOrderClient, object: responseValue.integerValue)
-                }
-                break
-            case .Failure(let error):
-                print(error)
-                self.NoInternetCheck(error)
-                break
-            }
-        }
-    }
 
     func postOrderAsDriver(clientid: Int, source: String, destination: String, passCount: String, duedate: String, departTime: String, vehicleModel: String, price: String) {
         let params: [String : AnyObject] = [
@@ -207,23 +190,23 @@ class APIRequester {
         }
     }
     
-    func getUserQueuesAsClientById(id: Int) {
-        let orderCancelStatus = 4
-        Alamofire.request(.GET, UserQueuesAsClientById + id.description).validate().responseJSON {
-            response in
-            switch response.result {
-            case .Success:
-                if let responseValue = response.result.value {            
-                    let queues = Mapper<Queue>().mapArray(responseValue)
-                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsClientLoaded, object: queues?.filter({$0.status != orderCancelStatus}).reverse())
-                }
-                break
-            case .Failure(let error):
-                print(error)
-                break
-            }
-        }
-    }
+//    func getUserQueuesAsClientById(id: Int) {
+//        let orderCancelStatus = 4
+//        Alamofire.request(.GET, UserQueuesAsClientById + id.description).validate().responseJSON {
+//            response in
+//            switch response.result {
+//            case .Success:
+//                if let responseValue = response.result.value {            
+//                    let queues = Mapper<Queue>().mapArray(responseValue)
+//                    
+//                }
+//                break
+//            case .Failure(let error):
+//                print(error)
+//                break
+//            }
+//        }
+//    }
     
     func getUserQueuesAsDriverById(id: Int) {
         let orderCancelStatus = 4
@@ -407,71 +390,90 @@ class APIRequester {
         }
     }
     
-    /*
-    public JSONObject Trip_Reject(long QID, long DQID, String reason, String apiUrl) {
-    HttpClient httpClient = getHttpClient();
-    JSONObject json = new JSONObject();
-    
-    System.out.println("New request came to " + apiUrl);
-    
-    try {
-    HttpPut request = new HttpPut(url + apiUrl + QID + "/" + DQID + "/" + reason);
-    
-    HttpResponse response = httpClient.execute(request);
-    json = parseResponseData(response);
-    
-    } catch (IOException e) {
-    json = null;
-    // TODO Auto-generated catch block
-    } catch (Exception e) {
-    e.printStackTrace();
-    e.getMessage();
-    json = null;
+    // API VERSION 2
+    func getVehiclesBy(source: String, destination: String, duedate: String, passCount: String) {
+        let VehiclesURL = FindVehicleURL + source + "/" + destination + "/" + duedate + "/" + passCount
+        let encodedURL = VehiclesURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        Alamofire.request(.GET, encodedURL!, encoding: .JSON).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    print(responseValue)
+                    let driverList = Mapper<DriverQueue>().mapArray(responseValue)
+                    self.notificationCenter.postNotificationName(Variables.Notifications.SearchDataReceived, object: driverList)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                self.NoInternetCheck(error)
+                break
+            }
+        }
     }
-    return json;
+    
+    func bookSeatInVehicle(userId: Int, dqId: Int, count: Int, remarks: String = "") {
+        
+        let params: [String : AnyObject] = [
+            "userid": userId,
+            "dqid": dqId,
+            "count": count,
+            "remarks": remarks
+        ]
+        
+        Alamofire.request(.POST, BookSeatInVehicleURL, parameters: params, encoding: .JSON).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    self.notificationCenter.postNotificationName(Variables.Notifications.BookedSeatInVehicle, object: responseValue)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                self.NoInternetCheck(error)
+                break
+            }
+        }
     }
-    */
     
+    func getUserReservations(userId: Int) {
+
+        let orderCancelStatus = 4
+        Alamofire.request(.GET, GetUserReservationsURL + userId.description, encoding: .JSON).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    print(responseValue)
+                    let userBookings = Mapper<ClientBooking>().mapArray(responseValue)
+                    print(userBookings)
+                    self.notificationCenter.postNotificationName(Variables.Notifications.UserQueuesAsClientLoaded, object: userBookings!.filter({$0.status != orderCancelStatus}).reverse())
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                self.NoInternetCheck(error)
+                break
+            }
+        }
+    }
     
-//    Alamofire.request(.POST, "https://httpbin.org/post", parameters: parameters)
-    // HTTP body: foo=bar&baz[]=a&baz[]=1&qux[x]=1&qux[y]=2&qux[z]=3
-    
-    /*
-    ////REGISTRATION AND AUTHENTICATION
-    
-    public static final String Register = "/register"; //post json
-    public static final String UnRegister = "/unregister/{id}"; //put
-    
-    public static final String LOGIN_AUTH = "login/";
-    
-    public static final String GET_USER_INFO = "user/";
-    public static final String CHANGE_USER_PASSWORD = "change_password/";//userpwd/{oldpwd}/{newpwd}
-    public static final String RESET_PWD = "/reset/{user}";
-    public static final String D_USER_ACTIVATE = "/driver/activate/{user}/{sc_code}";
-    
-    //TRIP
-    public static final String TripConfirm = "confirmtrip/";
-    public static final String TripReject = "rejecttrip/";
-    public static final String DqByCq = "getDqueuByCq/";
-    
-    ////ADDING TO QUEUE FOR CLIENTS
-    public static final String ADD_TO_QUEUE = "/queue/add";
-    public static final String GET_QUEUE_ONE = "queue/";
-    public static final String GET_CLIENT_QUEUE = "allqueue/";//{clientid}";
-    ;
-    
-    ////ADDING TO QUEUE FOR DRIVERS
-    public static final String ADD_TO_DQUEUE = "/dqueue/add";
-    
-    // BALANCE AND RECHARGE
-    public static final String TOPUP = "/payment/{ps_id}/{pwd}/{id}/{amt}";
-    public static final String CHECK_BALANCE = "/balance/{user}";
-    public static final String CANCEL_DQUEUE = "/dcancel/";//PUT
-    public static final String CANCEL_CQUEUE = "ccancel/"; //PUT
-    
-    //
-    public static final String UPDATE_DQUEUE = "/dqupdate/"; //PUT
-    public static final String UPDATE_CQUEUE = "/cqupdate/"; //PUT
-    
-    */
+    func cancelClientReservation(reservationId: Int) {
+        print(CancelUserReservationsURL + reservationId.description, terminator: "")
+        Alamofire.request(.PUT, CancelUserReservationsURL + reservationId.description).validate().responseJSON {
+            response in
+            switch response.result {
+            case .Success:
+                if let responseValue = response.result.value {
+                    self.notificationCenter.postNotificationName(Variables.Notifications.ClientQueueCancelled, object: responseValue.integerValue)
+                }
+                break
+            case .Failure(let error):
+                print(error)
+                self.NoInternetCheck(error)
+                break
+            }
+        }
+    }
 }

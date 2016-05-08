@@ -37,11 +37,11 @@ class RegisterViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(RegisterViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserRegistered:",
+            selector: #selector(RegisterViewController.onUserRegistered(_:)),
             name: Variables.Notifications.Regiser,
             object: nil)
         

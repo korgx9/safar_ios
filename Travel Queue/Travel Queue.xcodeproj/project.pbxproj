@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F196AFA1CCD329800B2C09D /* DriverDetailsToBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F196AF91CCD329800B2C09D /* DriverDetailsToBookViewController.swift */; };
 		6F1E4AC81C25B9A7009299A9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1E4AC71C25B9A7009299A9 /* MapKit.framework */; };
-		6F1E4ACA1C26E59F009299A9 /* CreateOrderPassengerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1E4AC91C26E59F009299A9 /* CreateOrderPassengerViewController.swift */; };
+		6F1E4ACA1C26E59F009299A9 /* ClientSearchForVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */; };
 		6F20ABBF1C2321750018C2B9 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */; };
+		6F2C36CE1CDD088D0021C82F /* EditDriverQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2C36CD1CDD088D0021C82F /* EditDriverQueueViewController.swift */; };
 		6F354C751C25B20A00AD8D89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F354C741C25B20A00AD8D89 /* User.swift */; };
 		6F3F761A1C8402BD001A42F1 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */; };
 		6F445A461C510E6100701CF7 /* DriverInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F445A451C510E6100701CF7 /* DriverInfoViewController.swift */; };
 		6F445A481C51146100701CF7 /* DriverInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F445A471C51146100701CF7 /* DriverInfo.swift */; };
 		6F5AB7DF1CA828AA0062D7A0 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5AB7DE1CA828AA0062D7A0 /* MenuTableViewController.swift */; };
 		6F5AB7E11CA84E950062D7A0 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5AB7E01CA84E950062D7A0 /* AccountViewController.swift */; };
+		6F5E871A1CD6333C002B409E /* ClientBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5E87191CD6333C002B409E /* ClientBooking.swift */; };
 		6F5F3C011C56575500D9470E /* DriverClientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */; };
 		6F66911D1C31A16F00711018 /* ClientQueuesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F66911C1C31A16F00711018 /* ClientQueuesTableViewController.swift */; };
 		6F66911F1C31A6B800711018 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F66911E1C31A6B800711018 /* Queue.swift */; };
@@ -38,6 +41,9 @@
 		6FE10E8C1BC5804F00D0574D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FE10E8A1BC5804F00D0574D /* LaunchScreen.storyboard */; };
 		6FE10E971BC5805000D0574D /* Travel_QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE10E961BC5805000D0574D /* Travel_QueueTests.swift */; };
 		6FE10EA21BC5805000D0574D /* Travel_QueueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE10EA11BC5805000D0574D /* Travel_QueueUITests.swift */; };
+		6FE779681CCBD153002A1927 /* DriversListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE779671CCBD153002A1927 /* DriversListTableViewController.swift */; };
+		6FE7796C1CCBD180002A1927 /* DriverListCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE7796A1CCBD180002A1927 /* DriverListCellTableViewCell.swift */; };
+		6FE7796D1CCBD180002A1927 /* DriverListCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FE7796B1CCBD180002A1927 /* DriverListCellTableViewCell.xib */; };
 		6FF061E71BF8AF190063F4B3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */; };
 		6FFCF5A61CA8FBCB00EF7828 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6FFCF5A81CA8FBCB00EF7828 /* Localizable.strings */; };
 		6FFE36421C27EC4A00B6119A /* CreateOrderDriverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */; };
@@ -72,9 +78,11 @@
 		61036996FBAAEB5852C3CEC1 /* Pods_Travel_Queue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_Queue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68B7CBCD52BCE5ADCCB9EABC /* Pods_Travel_QueueUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Travel_QueueUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E8B841BCDA3EAB59FEA1869 /* Pods-Travel Queue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travel Queue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Travel Queue/Pods-Travel Queue.release.xcconfig"; sourceTree = "<group>"; };
+		6F196AF91CCD329800B2C09D /* DriverDetailsToBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverDetailsToBookViewController.swift; sourceTree = "<group>"; };
 		6F1E4AC71C25B9A7009299A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		6F1E4AC91C26E59F009299A9 /* CreateOrderPassengerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrderPassengerViewController.swift; sourceTree = "<group>"; };
+		6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientSearchForVehicleViewController.swift; sourceTree = "<group>"; };
 		6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
+		6F2C36CD1CDD088D0021C82F /* EditDriverQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDriverQueueViewController.swift; sourceTree = "<group>"; };
 		6F354C741C25B20A00AD8D89 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6F3F76191C8402BD001A42F1 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		6F445A451C510E6100701CF7 /* DriverInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverInfoViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +91,7 @@
 		6F5AB7E01CA84E950062D7A0 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6F5AB7E21CA854900062D7A0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		6F5AB7E31CA854900062D7A0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6F5E87191CD6333C002B409E /* ClientBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientBooking.swift; sourceTree = "<group>"; };
 		6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverClientsTableViewController.swift; sourceTree = "<group>"; };
 		6F66911C1C31A16F00711018 /* ClientQueuesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientQueuesTableViewController.swift; sourceTree = "<group>"; };
 		6F66911E1C31A6B800711018 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -112,6 +121,9 @@
 		6FE10E9D1BC5805000D0574D /* Travel QueueUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Travel QueueUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FE10EA11BC5805000D0574D /* Travel_QueueUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Travel_QueueUITests.swift; sourceTree = "<group>"; };
 		6FE10EA31BC5805000D0574D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6FE779671CCBD153002A1927 /* DriversListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriversListTableViewController.swift; sourceTree = "<group>"; };
+		6FE7796A1CCBD180002A1927 /* DriverListCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverListCellTableViewCell.swift; sourceTree = "<group>"; };
+		6FE7796B1CCBD180002A1927 /* DriverListCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DriverListCellTableViewCell.xib; sourceTree = "<group>"; };
 		6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		6FFCF5A71CA8FBCB00EF7828 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6FFCF5AA1CA9030500EF7828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -160,8 +172,31 @@
 				6F445A471C51146100701CF7 /* DriverInfo.swift */,
 				6F97EA2D1C579DAB00195E19 /* DriverClient.swift */,
 				6F93EA2B1CA038F700AA5D5C /* City.swift */,
+				6F5E87191CD6333C002B409E /* ClientBooking.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		6F2C36CB1CDCF1320021C82F /* My Orders */ = {
+			isa = PBXGroup;
+			children = (
+				6FD17B231BE7DA1000D74CB8 /* SwitcherQueueViewController.swift */,
+				6F66911C1C31A16F00711018 /* ClientQueuesTableViewController.swift */,
+				6FB9DFE41C39A0480085B6FF /* DriverQueuesTableViewController.swift */,
+				6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */,
+				6F2C36CD1CDD088D0021C82F /* EditDriverQueueViewController.swift */,
+			);
+			name = "My Orders";
+			sourceTree = "<group>";
+		};
+		6F2C36CC1CDCF14A0021C82F /* Login_Register */ = {
+			isa = PBXGroup;
+			children = (
+				6FD84D631BC58BB900D0ECAB /* LoginViewController.swift */,
+				6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */,
+				6FA84D961C1F244200E180BB /* ActivationViewController.swift */,
+			);
+			name = Login_Register;
 			sourceTree = "<group>";
 		};
 		6FE10E751BC5804F00D0574D = {
@@ -189,26 +224,19 @@
 		6FE10E801BC5804F00D0574D /* Travel Queue */ = {
 			isa = PBXGroup;
 			children = (
-				6F20ABC01C2328A50018C2B9 /* Models */,
 				6FE10E811BC5804F00D0574D /* AppDelegate.swift */,
 				6FD84D651BC58E4500D0ECAB /* APIRequester.swift */,
 				6FD84D671BC58E8D00D0ECAB /* Utilities.swift */,
 				6FD84D691BC58ECE00D0ECAB /* Variables.swift */,
+				6F20ABC01C2328A50018C2B9 /* Models */,
 				6FE10E851BC5804F00D0574D /* Main.storyboard */,
-				6FD84D631BC58BB900D0ECAB /* LoginViewController.swift */,
-				6FF061E61BF8AF190063F4B3 /* RegisterViewController.swift */,
-				6FA84D961C1F244200E180BB /* ActivationViewController.swift */,
 				6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */,
-				6FD17B1D1BE6692500D74CB8 /* SwitcherViewController.swift */,
-				6F1E4AC91C26E59F009299A9 /* CreateOrderPassengerViewController.swift */,
-				6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */,
-				6FD17B231BE7DA1000D74CB8 /* SwitcherQueueViewController.swift */,
-				6F66911C1C31A16F00711018 /* ClientQueuesTableViewController.swift */,
-				6FB9DFE41C39A0480085B6FF /* DriverQueuesTableViewController.swift */,
+				6F2C36CC1CDCF14A0021C82F /* Login_Register */,
+				6FE779661CCBCA7C002A1927 /* Create Order */,
+				6F2C36CB1CDCF1320021C82F /* My Orders */,
 				6FB9DFE11C3941CC0085B6FF /* ClientQueueTableViewCell.xib */,
 				6FB9DFE01C3941CC0085B6FF /* ClientQueueTableViewCell.swift */,
 				6F445A451C510E6100701CF7 /* DriverInfoViewController.swift */,
-				6F5F3C001C56575500D9470E /* DriverClientsTableViewController.swift */,
 				6F5AB7DE1CA828AA0062D7A0 /* MenuTableViewController.swift */,
 				6F5AB7E01CA84E950062D7A0 /* AccountViewController.swift */,
 				6FA84D951C1DB86000E180BB /* Travel_Queue-Bridging-Header.h */,
@@ -237,6 +265,28 @@
 				6FE10EA31BC5805000D0574D /* Info.plist */,
 			);
 			path = "Travel QueueUITests";
+			sourceTree = "<group>";
+		};
+		6FE779661CCBCA7C002A1927 /* Create Order */ = {
+			isa = PBXGroup;
+			children = (
+				6FD17B1D1BE6692500D74CB8 /* SwitcherViewController.swift */,
+				6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */,
+				6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */,
+				6FE779671CCBD153002A1927 /* DriversListTableViewController.swift */,
+				6FE779691CCBD159002A1927 /* DriverListCell */,
+				6F196AF91CCD329800B2C09D /* DriverDetailsToBookViewController.swift */,
+			);
+			name = "Create Order";
+			sourceTree = "<group>";
+		};
+		6FE779691CCBD159002A1927 /* DriverListCell */ = {
+			isa = PBXGroup;
+			children = (
+				6FE7796A1CCBD180002A1927 /* DriverListCellTableViewCell.swift */,
+				6FE7796B1CCBD180002A1927 /* DriverListCellTableViewCell.xib */,
+			);
+			name = DriverListCell;
 			sourceTree = "<group>";
 		};
 		88627030572B9E006037C654 /* Frameworks */ = {
@@ -393,6 +443,7 @@
 				6FE10E8C1BC5804F00D0574D /* LaunchScreen.storyboard in Resources */,
 				6FE10E891BC5804F00D0574D /* Assets.xcassets in Resources */,
 				6FE10E871BC5804F00D0574D /* Main.storyboard in Resources */,
+				6FE7796D1CCBD180002A1927 /* DriverListCellTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +597,8 @@
 				6FD17B241BE7DA1000D74CB8 /* SwitcherQueueViewController.swift in Sources */,
 				6F445A461C510E6100701CF7 /* DriverInfoViewController.swift in Sources */,
 				6FD84D6A1BC58ECE00D0ECAB /* Variables.swift in Sources */,
+				6F5E871A1CD6333C002B409E /* ClientBooking.swift in Sources */,
+				6FE779681CCBD153002A1927 /* DriversListTableViewController.swift in Sources */,
 				6FA84D971C1F244200E180BB /* ActivationViewController.swift in Sources */,
 				6FD84D641BC58BB900D0ECAB /* LoginViewController.swift in Sources */,
 				6F66911D1C31A16F00711018 /* ClientQueuesTableViewController.swift in Sources */,
@@ -553,14 +606,17 @@
 				6F97EA2E1C579DAB00195E19 /* DriverClient.swift in Sources */,
 				6FF061E71BF8AF190063F4B3 /* RegisterViewController.swift in Sources */,
 				6FD84D661BC58E4500D0ECAB /* APIRequester.swift in Sources */,
-				6F1E4ACA1C26E59F009299A9 /* CreateOrderPassengerViewController.swift in Sources */,
+				6F1E4ACA1C26E59F009299A9 /* ClientSearchForVehicleViewController.swift in Sources */,
 				6FABFD1B1C3C2367007E8890 /* DriverQueue.swift in Sources */,
+				6F2C36CE1CDD088D0021C82F /* EditDriverQueueViewController.swift in Sources */,
 				6F93EA2C1CA038F700AA5D5C /* City.swift in Sources */,
+				6FE7796C1CCBD180002A1927 /* DriverListCellTableViewCell.swift in Sources */,
 				6FB9DFE51C39A0480085B6FF /* DriverQueuesTableViewController.swift in Sources */,
 				6FD84D681BC58E8D00D0ECAB /* Utilities.swift in Sources */,
 				6F5AB7DF1CA828AA0062D7A0 /* MenuTableViewController.swift in Sources */,
 				6FE10E821BC5804F00D0574D /* AppDelegate.swift in Sources */,
 				6F66911F1C31A6B800711018 /* Queue.swift in Sources */,
+				6F196AFA1CCD329800B2C09D /* DriverDetailsToBookViewController.swift in Sources */,
 				6FD17B1E1BE6692500D74CB8 /* SwitcherViewController.swift in Sources */,
 				6F20ABBF1C2321750018C2B9 /* MainTabbarViewController.swift in Sources */,
 				6FFE36421C27EC4A00B6119A /* CreateOrderDriverViewController.swift in Sources */,
@@ -723,10 +779,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Travel Queue/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kesh-Omil-Soft.Travel-Queue";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -740,10 +798,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Travel Queue/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kesh-Omil-Soft.Travel-Queue";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

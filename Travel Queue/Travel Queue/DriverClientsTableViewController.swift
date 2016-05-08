@@ -35,7 +35,7 @@ class DriverClientsTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         let doneBarButton = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close button title on passengers list view"),
-            style: UIBarButtonItemStyle.Done, target: self, action: "dismissView")
+            style: UIBarButtonItemStyle.Done, target: self, action: #selector(DriverClientsTableViewController.dismissView))
         
         navigationItem.leftBarButtonItem = doneBarButton
     }
@@ -43,7 +43,7 @@ class DriverClientsTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverClientsLoaded:",
+            selector: #selector(DriverClientsTableViewController.onDriverClientsLoaded(_:)),
             name: Variables.Notifications.DriverClients,
             object: nil)
         

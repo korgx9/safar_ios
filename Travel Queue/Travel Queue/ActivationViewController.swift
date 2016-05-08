@@ -36,11 +36,11 @@ class ActivationViewController: UIViewController {
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onUserRegistered:",
+            selector: #selector(ActivationViewController.onUserRegistered(_:)),
             name: Variables.Notifications.Activate,
             object: nil)
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActivationViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     

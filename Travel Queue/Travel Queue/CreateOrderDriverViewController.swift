@@ -75,14 +75,15 @@ class CreateOrderDriverViewController: UIViewController, UITextFieldDelegate, UI
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverPostedOrder:",
+            selector: #selector(CreateOrderDriverViewController.onDriverPostedOrder(_:)),
             name: Variables.Notifications.PostOrderDriver,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "onDriverCancelledOrder:",
+            selector: #selector(CreateOrderDriverViewController.onDriverCancelledOrder(_:)),
             name: Variables.Notifications.DriverQueueCancelled,
             object: nil)
+        passengersCountField.text = Int(countOfPassengersStepper.value).description
     }
     
     override func viewWillDisappear(animated: Bool) {
