@@ -10,7 +10,7 @@ import UIKit
 
 class DriversListTableViewController: UITableViewController {
     private let apiRequester = APIRequester.sharedInstance
-    private let reuseIdentifierDriverCell = "DriverListCell"
+    private let reuseIdentifierDriverCell = "ClientSearchCell"
     
     var driverQueueList = [DriverQueue]()
     var bookedSeatsCount: Int = 0
@@ -18,7 +18,7 @@ class DriversListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let driverCell = UINib(nibName: "DriverListCellTableViewCell", bundle: nil)
+        let driverCell = UINib(nibName: "ClientSearchTableViewCell", bundle: nil)
         tableView.registerNib(driverCell, forCellReuseIdentifier: reuseIdentifierDriverCell)
         
         tableView.estimatedRowHeight = 80.0
@@ -68,23 +68,15 @@ class DriversListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row = indexPath.row
         let order = driverQueueList[row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifierDriverCell, forIndexPath: indexPath) as! DriverListCellTableViewCell
-//        cell.nameLabel.text = order.title
-//        cell.addressLabel.text = order.address
-//        cell.reviewMarkLabel.text = order.ratingAverage.description
-        //            cell.reviewMarkTextLabel.text = ""
-//        cell.priceLabel.text = order.price + " " + order.currency
-//        cell.advImage.sd_setImageWithURL(NSURL(string: order.images[0]))
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifierDriverCell, forIndexPath: indexPath) as! ClientSearchTableViewCell
         
-        
-//        cell.vehicleImage.sd_imageURL()
-        
+        cell.directionLabel.text = "\(order.source) - \(order.destination)"
+        cell.dateLabel.text = NSLocalizedString("Date", comment: "Date text on search result cell") + ": " + order.duedate
+        cell.priceLabel.text = order.price.description
         cell.vehicleImage.sd_setImageWithURL(NSURL(string: "http://safar.tj:8080/getImageforDq/" + order.id.description), placeholderImage: UIImage(named: "noPhoto"), options: .RetryFailed)
-        
         cell.vehicleNameLabel.text = order.carModel
-        cell.availableSeatsCountLabel.text = order.remainedSeats.description
-        cell.departureTimeLabel.text = order.departTime
-        cell.priceForASeatLabel.text = order.price.description
+        cell.totalSeatsLabel.text = order.numberofPassengers.description
+        cell.availableSeatsLabel.text = order.remainedSeats.description
         
         return cell
     }

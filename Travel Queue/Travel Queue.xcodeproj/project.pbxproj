@@ -11,6 +11,8 @@
 		6F1E4AC81C25B9A7009299A9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1E4AC71C25B9A7009299A9 /* MapKit.framework */; };
 		6F1E4ACA1C26E59F009299A9 /* ClientSearchForVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */; };
 		6F1E92F01CDF891900698510 /* LoginRegister.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F1E92EF1CDF891900698510 /* LoginRegister.storyboard */; };
+		6F1E92F61CDFBCCA00698510 /* ClientSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1E92F41CDFBCCA00698510 /* ClientSearchTableViewCell.swift */; };
+		6F1E92F71CDFBCCA00698510 /* ClientSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F1E92F51CDFBCCA00698510 /* ClientSearchTableViewCell.xib */; };
 		6F20ABBF1C2321750018C2B9 /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */; };
 		6F2C36CE1CDD088D0021C82F /* EditDriverQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2C36CD1CDD088D0021C82F /* EditDriverQueueViewController.swift */; };
 		6F354C751C25B20A00AD8D89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F354C741C25B20A00AD8D89 /* User.swift */; };
@@ -83,6 +85,8 @@
 		6F1E4AC71C25B9A7009299A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientSearchForVehicleViewController.swift; sourceTree = "<group>"; };
 		6F1E92EF1CDF891900698510 /* LoginRegister.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginRegister.storyboard; sourceTree = "<group>"; };
+		6F1E92F41CDFBCCA00698510 /* ClientSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientSearchTableViewCell.swift; sourceTree = "<group>"; };
+		6F1E92F51CDFBCCA00698510 /* ClientSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientSearchTableViewCell.xib; sourceTree = "<group>"; };
 		6F20ABBE1C2321750018C2B9 /* MainTabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
 		6F2C36CD1CDD088D0021C82F /* EditDriverQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDriverQueueViewController.swift; sourceTree = "<group>"; };
 		6F354C741C25B20A00AD8D89 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -165,6 +169,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F1E92F11CDFBC7500698510 /* ClientSearchListCell */ = {
+			isa = PBXGroup;
+			children = (
+				6F1E92F41CDFBCCA00698510 /* ClientSearchTableViewCell.swift */,
+				6F1E92F51CDFBCCA00698510 /* ClientSearchTableViewCell.xib */,
+			);
+			name = ClientSearchListCell;
+			sourceTree = "<group>";
+		};
 		6F20ABC01C2328A50018C2B9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +288,7 @@
 			children = (
 				6FD17B1D1BE6692500D74CB8 /* SwitcherViewController.swift */,
 				6F1E4AC91C26E59F009299A9 /* ClientSearchForVehicleViewController.swift */,
+				6F1E92F11CDFBC7500698510 /* ClientSearchListCell */,
 				6FFE36411C27EC4A00B6119A /* CreateOrderDriverViewController.swift */,
 				6FE779671CCBD153002A1927 /* DriversListTableViewController.swift */,
 				6FE779691CCBD159002A1927 /* DriverListCell */,
@@ -447,6 +461,7 @@
 				6FE10E891BC5804F00D0574D /* Assets.xcassets in Resources */,
 				6F1E92F01CDF891900698510 /* LoginRegister.storyboard in Resources */,
 				6FE10E871BC5804F00D0574D /* Main.storyboard in Resources */,
+				6F1E92F71CDFBCCA00698510 /* ClientSearchTableViewCell.xib in Resources */,
 				6FE7796D1CCBD180002A1927 /* DriverListCellTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,6 +628,7 @@
 				6F1E4ACA1C26E59F009299A9 /* ClientSearchForVehicleViewController.swift in Sources */,
 				6FABFD1B1C3C2367007E8890 /* DriverQueue.swift in Sources */,
 				6F2C36CE1CDD088D0021C82F /* EditDriverQueueViewController.swift in Sources */,
+				6F1E92F61CDFBCCA00698510 /* ClientSearchTableViewCell.swift in Sources */,
 				6F93EA2C1CA038F700AA5D5C /* City.swift in Sources */,
 				6FE7796C1CCBD180002A1927 /* DriverListCellTableViewCell.swift in Sources */,
 				6FB9DFE51C39A0480085B6FF /* DriverQueuesTableViewController.swift in Sources */,

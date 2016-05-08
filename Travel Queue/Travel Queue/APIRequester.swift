@@ -28,7 +28,7 @@ class APIRequester {
     private let CitiesURL = BASE_URL + "locations2/"
     private let CancelDQueue = BASE_URL + "dcancel/"
     private let CancelCQueue = BASE_URL + "ccancel/"
-    private let DeviceTokenURL = BASE_URL + "usertoken/";//"/usertoken/{user_id}/{token}";"
+    private let DeviceTokenURL = BASE_URL + "usertoken/"
     
     //TRIP
     private let TripConfirm = BASE_URL + "confirmtrip/"
@@ -45,8 +45,8 @@ class APIRequester {
     private let FindVehicleURL = BASE_URL_V2 + "findmatch/"
     private let BookSeatInVehicleURL = BASE_URL_V2 + "bookplace/"
     private let GetUserReservationsURL = BASE_URL_V2 + "userbookingmatchess/"
-    private let EditReservationURL = BASE_URL + "editreserve/"//{queue_id}/{newcount}/
-    private let CancelUserReservationsURL = BASE_URL_V2 + "cancelbooking/"//{reservation_id}
+    private let EditReservationURL = BASE_URL + "editreserve/"
+    private let CancelUserReservationsURL = BASE_URL_V2 + "cancelbooking/"
     
     
     private let notificationCenter = NSNotificationCenter.defaultCenter()
